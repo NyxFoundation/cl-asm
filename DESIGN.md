@@ -1,197 +1,197 @@
-# CL ASM v0 — 設計案
+# CL ASM v0 — Design Proposal
 
-更新日: 2026-09-12。これは設計文書であり、実装・コンパイル・証明の検査はまだ行っていない。
+Last updated: 2026-09-12. This is a design document; no implementation, compilation, or proof checking has been performed yet.
 
-## 1. 合意した範囲
+## 1. Agreed Scope
 
-- このセッションでは設計だけを行う。
-- 初期対象は `weigh_justification_and_finalization` と、その実装に必要な小さな補助処理。
-- 各処理を、RISC-V 命令列、メモリ表現、事前・事後条件、証明の組として扱う。
-- 独立した CL 仕様リポジトリや、CL 全体の第二の Lean 実装を前提にしない。
-- 入口は必要な状態フィールドへの内部メモリインターフェース。SSZ デコードや投票残高の集計は呼び出し側に置く。
-- 明示した呼び出し条件の下で、機械モデル上の命令列について、正しい結果、変更対象外のメモリの保存、停止性を保証する。前提違反を内部ルーチン自身が検出することは初期版の保証に含めない。
-- 将来の合成では、呼び出し側がその前提を満たすことも証明する。
-- 初期イメージは mainnet preset の定数を固定して用いる。`SLOTS_PER_EPOCH = 32`、`SLOTS_PER_HISTORICAL_ROOT = 8192`。
-- 初期版の成果物は ELF 出力までを範囲とする。特定の zkVM への統合、zkVM 固有の入出力・起動終了処理、実行証明の生成・検証は対象外。
-- 出力 ELF の動作確認には、`riscv-zkvm` の Lean 製 RISC-V 実行器を使う。これは検証用途であり、実際の zkVM への統合とは区別する。
-- Lean で形式証明する範囲は命令列まで。ELF 生成・照合はテストで確認し、出力器、アセンブラ、リンカ、ELF ローダ、照合器の正しさや、ELF と命令列の対応の形式証明は初期版に含めない。
+- This session is limited to design work.
+- The initial target is `weigh_justification_and_finalization` and the small helpers needed to implement it.
+- Treat each operation as a combination of a RISC-V instruction sequence, a memory representation, preconditions and postconditions, and a proof.
+- Do not require a separate CL specification repository or a second Lean implementation of the entire consensus layer.
+- Expose an internal memory interface to the required state fields. Leave SSZ decoding and vote-balance aggregation to the caller.
+- Under explicit calling preconditions, guarantee correct results, preservation of memory outside the modification footprint, and termination for the instruction sequences in the machine model. The initial version does not guarantee that the internal routine itself detects precondition violations.
+- Future composition must also prove that callers establish these preconditions.
+- Fix the initial image to the mainnet preset constants: `SLOTS_PER_EPOCH = 32` and `SLOTS_PER_HISTORICAL_ROOT = 8192`.
+- Limit the initial deliverables to ELF output. Integration with a specific zkVM, zkVM-specific input/output and startup/shutdown handling, and generation or verification of execution proofs are out of scope.
+- Use the Lean-based RISC-V interpreter from `riscv-zkvm` to test the generated ELF. This is a validation tool, not integration with an actual zkVM.
+- Limit formal verification in Lean to the instruction sequences. Validate ELF generation and consistency through tests; the initial version does not include formal proofs of the emitter, assembler, linker, ELF loader, or consistency checker, or a formal proof connecting the ELF to the instruction sequences.
 
-以下の ABI、配置、部品分割は、この範囲を具体化する設計案。未決定事項は末尾に記す。
+The ABI, layout, and component breakdown below are proposals that make this scope concrete. Remaining design decisions are listed at the end.
 
-## 2. 参照先と証明の意味
+## 2. References and Meaning of the Proofs
 
-公式の対象関数とアクセサは、[consensus-specs `530cf56a3920dc048900b4b7a408b3acd71331fa` の Phase0 文書](https://github.com/ethereum/consensus-specs/blob/530cf56a3920dc048900b4b7a408b3acd71331fa/specs/phase0/beacon-chain.md#justification-and-finalization)を参照する。この関数を参照することは、Phase0 全体や現行 CL 全体の実装を意味しない。
+The reference function and accessors come from the [Phase0 specification at consensus-specs `530cf56a3920dc048900b4b7a408b3acd71331fa`](https://github.com/ethereum/consensus-specs/blob/530cf56a3920dc048900b4b7a408b3acd71331fa/specs/phase0/beacon-chain.md#justification-and-finalization). Referencing this function does not imply implementing all of Phase0 or the entire current consensus layer.
 
-この版が依存する整数型は `eth-ssz-specs==0.1.0`。`Gwei` と `Epoch` は `Uint64` の派生型であり、加算・乗算の結果も範囲検査される。[依存指定](https://github.com/ethereum/consensus-specs/blob/530cf56a3920dc048900b4b7a408b3acd71331fa/pyproject.toml)、[整数型実装](https://github.com/ethereum/ssz-specs/blob/7bce07ff7d51b1a3c66ff4e2bd3233ac248ede70/src/ssz/uint.py)
+This revision obtains its integer types from `eth-ssz-specs==0.1.0`. `Gwei` and `Epoch` derive from `Uint64`, and the results of addition and multiplication are also range-checked. See the [dependency declaration](https://github.com/ethereum/consensus-specs/blob/530cf56a3920dc048900b4b7a408b3acd71331fa/pyproject.toml) and [integer type implementation](https://github.com/ethereum/ssz-specs/blob/7bce07ff7d51b1a3c66ff4e2bd3233ac248ede70/src/ssz/uint.py).
 
-Lean で証明する対象は、命令列がこの処理の状態更新条件を満たすこと。公式 Python の演算意味論から Lean の条件への対応を、機械証明済みと呼ばない。参照箇所との対応表、条件のレビュー、公式処理との比較テストで、その翻訳を確認する。
+The Lean proofs establish that the instruction sequences satisfy this routine's state-update conditions. The correspondence between the official Python operation semantics and the Lean conditions is not claimed to be machine-proved. Validate that translation through a mapping to the reference source, review of the conditions, and comparison tests against the official routine.
 
-同様に、証明した命令列から実行 ELF への変換はテストで確認する信頼境界とする。「モデル上で証明した命令列から生成し、テストした ELF」と表現し、「ELF の正しさまで形式証明済み」とは呼ばない。
+Likewise, conversion from the proved instruction sequences to an executable ELF is a trust boundary checked through tests. Describe the artifact as an "ELF generated from instruction sequences proved in the model and validated through tests," not as an "ELF whose correctness is formally proved."
 
-再利用候補は、調査済みの `riscv-zkvm v0.3.0` (`afcbc45e1c74c2d296e032b5606dd977a304e8ad`) の機械モデルと分離論理。evm-asm の調査基準は `7e65e4d024718f704226cd795f3d03d4e9aafe13`。依存の更新は、定理と実行環境への影響を確認して行う。
+The machine model and separation logic from the investigated `riscv-zkvm v0.3.0` (`afcbc45e1c74c2d296e032b5606dd977a304e8ad`) are candidates for reuse. The evm-asm investigation is pinned to `7e65e4d024718f704226cd795f3d03d4e9aafe13`. Assess the impact on theorems and the execution environment before updating dependencies.
 
-## 3. 内部メモリと呼び出し規約の案
+## 3. Proposed Internal Memory Layout and Calling Convention
 
-外側の `weigh` を一つの呼び出し可能な RISC-V ルーチンとし、内部の小さな部品は Lean のマクロとしてインライン展開する。
+Expose `weigh` as a single callable RISC-V routine, with its small internal components expanded inline as Lean macros.
 
-| 引数レジスタ | 内容 |
+| Argument register | Contents |
 |---|---|
-| `a0` / `x10` | 状態領域の先頭アドレス |
-| `a1` / `x11` | 読み取り専用の `block_roots` 配列の先頭 |
-| `a2` / `x12` | 総有効残高 `T` |
-| `a3` / `x13` | 前 epoch の投票残高 `A_prev` |
-| `a4` / `x14` | 現 epoch の投票残高 `A_curr` |
-| `a5` / `x15` | 呼び出し側が用意する作業領域の先頭 |
+| `a0` / `x10` | Base address of the state region |
+| `a1` / `x11` | Base address of the read-only `block_roots` array |
+| `a2` / `x12` | Total effective balance `T` |
+| `a3` / `x13` | Previous-epoch voting balance `A_prev` |
+| `a4` / `x14` | Current-epoch voting balance `A_curr` |
+| `a5` / `x15` | Base address of caller-provided scratch memory |
 
-状態はその場で更新し、結果を返す。戻り値用のスカラーは設けない。ルーチン内部では他のサブルーチンを呼ばず、末尾で `ra` に復帰する。`sp` と callee-saved レジスタは保存する。使用する caller-saved レジスタは契約上の作業資源として列挙する。
+Return results by updating the state in place; there is no scalar return value. The routine makes no internal subroutine calls and returns to `ra` at the end. Preserve `sp` and callee-saved registers. List the caller-saved registers used by the routine as scratch resources in its contract.
 
-### 状態領域: 136 bytes
+### State Region: 136 Bytes
 
-| オフセット | サイズ | フィールド |
+| Offset | Size | Field |
 |---|---:|---|
 | `0` | 8 | `slot` |
-| `8` | 8 | `justification_bits`（下位4ビットを使用、上位は0） |
+| `8` | 8 | `justification_bits` (low four bits used; upper bits zero) |
 | `16` | 40 | `previous_justified_checkpoint` |
 | `56` | 40 | `current_justified_checkpoint` |
 | `96` | 40 | `finalized_checkpoint` |
 
-各 checkpoint は epoch の8 bytes と root の32 bytes。整数は little-endian、root は32 bytesの列として保持する。これは内部 ABI の配置であり、BeaconState 全体の SSZ 配置ではない。
+Each checkpoint consists of an 8-byte epoch and a 32-byte root. Integers are little-endian, and roots are stored as sequences of 32 bytes. This is an internal ABI layout, not the SSZ layout of the full BeaconState.
 
-`block_roots` は `N = SLOTS_PER_HISTORICAL_ROOT` 個の root を並べた `32*N` bytes の別領域。作業領域は80 bytes とし、更新前の previous/current checkpoint を各40 bytes保存する。状態領域、root 配列、作業領域は互いに分離し、8-byte aligned とする。
+`block_roots` occupies a separate region of `32*N` bytes containing `N = SLOTS_PER_HISTORICAL_ROOT` roots. Allocate 80 bytes of scratch memory to save the old previous and current checkpoints, 40 bytes each. The state region, root array, and scratch region must be pairwise disjoint and 8-byte aligned.
 
-`slot` と root 配列は保存する。作業領域の初期内容は任意でよく、終了後の内容は呼び出し側に意味を持たせない。ヒープ割当て、暗号処理、ホストコールはこのルーチンに含めない。
+Preserve `slot` and the root array. The initial contents of scratch memory are arbitrary, and the caller must not attach meaning to its final contents. This routine includes no heap allocation, cryptographic operations, or host calls.
 
-## 4. 呼び出し条件
+## 4. Calling Preconditions
 
-初期イメージは mainnet preset とし、`S = SLOTS_PER_EPOCH = 32`、`N = SLOTS_PER_HISTORICAL_ROOT = 8192` をビルド時に固定する。[固定した版の mainnet 定数](https://github.com/ethereum/consensus-specs/blob/530cf56a3920dc048900b4b7a408b3acd71331fa/presets/mainnet/phase0.yaml)
+Use the mainnet preset for the initial image, fixing `S = SLOTS_PER_EPOCH = 32` and `N = SLOTS_PER_HISTORICAL_ROOT = 8192` at build time. See the [mainnet constants at the pinned revision](https://github.com/ethereum/consensus-specs/blob/530cf56a3920dc048900b4b7a408b3acd71331fa/presets/mainnet/phase0.yaml).
 
-root 配列は `32*8192 = 262144` bytes（256 KiB）。参照するのは必要な最大二つの root で、配列全体は走査しない。minimal preset への対応は初期イメージの要件に含めない。mainnet 定数の採用は、CL 全体や mainnet 実行環境への対応を意味しない。
+The root array occupies `32*8192 = 262144` bytes (256 KiB). The routine reads at most two required roots rather than traversing the entire array. Support for the minimal preset is not a requirement for the initial image. Adopting mainnet constants does not imply support for the entire consensus layer or the mainnet execution environment.
 
-メモリ上の値を読み取った意味として、次を定義する。
+Define the following in terms of the values represented in memory:
 
-- `E = floor(slot / S)`。
-- `P = max(E - 1, 0)`。genesis での前 epoch の扱いも公式アクセサに合わせる。
-- `prevOK` は数学上の整数の比較 `3*A_prev >= 2*T`。
-- `currOK` は数学上の整数の比較 `3*A_curr >= 2*T`。
+- `E = floor(slot / S)`.
+- `P = max(E - 1, 0)`. Match the official accessor's treatment of the previous epoch at genesis.
+- `prevOK` is the mathematical integer comparison `3*A_prev >= 2*T`.
+- `currOK` is the mathematical integer comparison `3*A_curr >= 2*T`.
 
-契約の前提は次の通り。
+The contract requires the following preconditions:
 
-1. 指定した全領域が機械モデル上でアクセス可能で、アドレス計算が折り返さない。コード領域をデータとして書き換えない。
-2. 入力整数が64ビットの範囲内で、justification bits は4ビットの正規表現。
-3. `3*A_prev`、`3*A_curr`、`2*T` がそれぞれ `2^64` 未満。
-4. 更新前の previous checkpoint の epoch に3を、current checkpoint の epoch に2を足しても64ビットの範囲内。これは初期証明用の十分条件であり、公式関数のあらゆる成功入力を網羅する主張ではない。
-5. `prevOK` の場合、`k=P*S` について `k < slot <= k+N`。`currOK` の場合、`k=E*S` について同様。公式アクセサの評価に必要な中間値も整数型の範囲内。
-6. エントリアドレス、復帰先、モデル上のコード配置、レジスタの所有条件が成立する。復帰先はルーチン内部と重ならず、必要な命令アラインメントを満たす。
+1. All specified regions are accessible in the machine model, and address calculations do not wrap around. The code region is not overwritten as data.
+2. Input integers fit within 64 bits, and justification bits use a canonical four-bit representation.
+3. `3*A_prev`, `3*A_curr`, and `2*T` are each less than `2^64`.
+4. Adding 3 to the old previous checkpoint's epoch and 2 to the old current checkpoint's epoch stays within the 64-bit range. This is a sufficient condition for the initial proof, not a claim to cover every successful input of the official function.
+5. If `prevOK`, let `k=P*S` and require `k < slot <= k+N`. If `currOK`, require the same condition with `k=E*S`. Intermediate values needed to evaluate the official accessors must also stay within their integer types' ranges.
+6. The entry address, return address, modeled code layout, and register ownership conditions are valid. The return address lies outside the routine and satisfies the required instruction alignment.
 
-投票残高が総有効残高以下であることは、ここでは追加の前提にしない。渡された残高が正しく集計されたことの保証は外側の層の責任であり、このルーチンはその集計結果を引数として処理する。
+Do not add a precondition that voting balances must be no greater than the total effective balance. The outer layer is responsible for ensuring that the supplied balances were aggregated correctly; this routine processes those aggregation results as arguments.
 
-初期の `hasSupermajority` 例は全64ビット入力について数学的な閾値比較を計算する案だった。CL 処理との対応に用いる際は、上記の範囲内で公式の演算結果と一致することを示す。範囲外で Python が例外を出す動作を、その例が実装しているとは主張しない。
+The initial `hasSupermajority` example was a proposal for computing the mathematical threshold comparison over all 64-bit inputs. When relating it to the CL routine, show agreement with the official operation results within the ranges above. Do not claim that the example implements Python's exception behavior outside those ranges.
 
-## 5. 実行順序と部品分割
+## 5. Execution Order and Component Breakdown
 
 ```text
-更新前の checkpoint を保存
+Save the old checkpoints
           ↓
-slot から E と P を計算
+Compute E and P from slot
           ↓
-previous checkpoint を旧 current に更新、bits をシフト
+Set the previous checkpoint to the old current checkpoint; shift bits
           ↓
-前 epoch の閾値判定 → 成立時に root を読み、current と bit 1 を更新
+Check the previous-epoch threshold → if met, read the root and update current and bit 1
           ↓
-現 epoch の閾値判定 → 成立時に root を読み、current と bit 0 を更新
+Check the current-epoch threshold → if met, read the root and update current and bit 0
           ↓
-四つの finalization 条件を公式仕様の順で評価・更新
+Evaluate and apply the four finalization conditions in specification order
           ↓
-呼び出し側へ復帰
+Return to the caller
 ```
 
-| マクロ／処理 | 証明する性質 |
+| Macro / operation | Property to prove |
 |---|---|
-| `copyCheckpoint` | epoch と root の40 bytesをコピーし、他の領域を保存する |
-| `epochAtSlot` | 正の定数 `S` による商を求める |
-| `previousEpoch` | `max(E-1, 0)` を求める |
-| `hasSupermajority` | 閾値判定の結果が0または1で、比較条件と一致する |
-| `blockRootAtEpoch` | 時間範囲の前提の下で `block_roots[(epoch*S) mod N]` を読む |
-| `shiftJustificationBits` | 下位4ビットのシフトと切捨てを正しく行う |
-| justification の各分岐 | 対応する checkpoint とビットを更新する |
-| finalization の各分岐 | 更新前の checkpoint を使って条件付き更新を行う |
-| 全体の合成 | 最終状態、領域の保存、終了までを接続する |
+| `copyCheckpoint` | Copy the 40 bytes of the epoch and root while preserving other regions |
+| `epochAtSlot` | Compute the quotient by the positive constant `S` |
+| `previousEpoch` | Compute `max(E-1, 0)` |
+| `hasSupermajority` | Produce 0 or 1, matching the threshold comparison |
+| `blockRootAtEpoch` | Read `block_roots[(epoch*S) mod N]` under the time-range preconditions |
+| `shiftJustificationBits` | Correctly shift and truncate the low four bits |
+| Each justification branch | Update the corresponding checkpoint and bit |
+| Each finalization branch | Perform a conditional update using an old checkpoint |
+| Overall composition | Connect the final state, region preservation, and termination guarantees |
 
-マクロには利用レジスタを明示して渡し、読み取り・書き換えレジスタを契約に含める。以前の `hasSupermajority` 例では `x10` が結果レジスタだったため、状態ポインタを `x10` に置く今回の ABI にそのまま連結してはいけない。レジスタの割当てと退避は設計し、その合成を証明する。一般的なレジスタ割当てコンパイラの開発は対象に含めない。
+Pass the registers used by each macro explicitly, and include its read and clobber sets in the contract. The earlier `hasSupermajority` example used `x10` as its result register, so it cannot be concatenated unchanged into this ABI, which stores the state pointer in `x10`. Design the register assignment and any necessary saves, and prove the composition. Building a general-purpose register-allocating compiler is out of scope.
 
-小さな固定長コピーは展開する方針。初期ルーチンにデータ依存のループは必要ない。ステップ上限は生成された命令列と各分岐の上限から導き、推測した定数を置かない。RISC-V のステップ数と特定 zkVM の証明コストは別に評価する。
+Unroll small fixed-size copies. The initial routine does not require data-dependent loops. Derive the step bound from the generated instruction sequences and the bounds of their branches rather than choosing a guessed constant. Evaluate RISC-V step counts separately from the proving cost of any particular zkVM.
 
-## 6. 全体の事後条件
+## 6. Overall Postconditions
 
-入力時の値を `oldPrev`、`oldCurr`、`oldFinal`、`oldBits` とする。
+Let `oldPrev`, `oldCurr`, `oldFinal`, and `oldBits` denote the input values.
 
-- `previous' = oldCurr`。
-- `bits' = ((oldBits << 1) & 15) | (prevOK ? 2 : 0) | (currOK ? 1 : 0)`。
-- `current'` は `currOK` なら `(E, root(E))`、それ以外で `prevOK` なら `(P, root(P))`、どちらでもなければ `oldCurr`。
-- `finalized'` は、次の四つを上から順に適用した結果。どれも成立しなければ `oldFinal`。
+- `previous' = oldCurr`.
+- `bits' = ((oldBits << 1) & 15) | (prevOK ? 2 : 0) | (currOK ? 1 : 0)`.
+- `current'` is `(E, root(E))` if `currOK`; otherwise `(P, root(P))` if `prevOK`; otherwise `oldCurr`.
+- `finalized'` is the result of applying the following four conditions in order. If none holds, it remains `oldFinal`.
 
-| 順序 | 条件（`bits'` を使用） | 更新値 |
+| Order | Condition (using `bits'`) | Updated value |
 |---|---|---|
-| 1 | `(bits' & 14) = 14` かつ `oldPrev.epoch + 3 = E` | `oldPrev` |
-| 2 | `(bits' & 6) = 6` かつ `oldPrev.epoch + 2 = E` | `oldPrev` |
-| 3 | `(bits' & 7) = 7` かつ `oldCurr.epoch + 2 = E` | `oldCurr` |
-| 4 | `(bits' & 3) = 3` かつ `oldCurr.epoch + 1 = E` | `oldCurr` |
+| 1 | `(bits' & 14) = 14` and `oldPrev.epoch + 3 = E` | `oldPrev` |
+| 2 | `(bits' & 6) = 6` and `oldPrev.epoch + 2 = E` | `oldPrev` |
+| 3 | `(bits' & 7) = 7` and `oldCurr.epoch + 2 = E` | `oldCurr` |
+| 4 | `(bits' & 3) = 3` and `oldCurr.epoch + 1 = E` | `oldCurr` |
 
-後の成立条件による書き込みが優先される。`else-if` への変更や、更新済みの current を finalization に使う変更を無条件には行わない。
+Writes from later satisfied conditions take precedence. Do not replace these checks with an `else-if` chain or use the updated current checkpoint for finalization without justification.
 
-公式の「最初の二つの epoch をスキップする」処理は、外側の `process_justification_and_finalization` にある。今回の `weigh` に新たな早期 return を追加しない。
+The official logic that skips the first two epochs belongs to the outer `process_justification_and_finalization` routine. Do not add a new early return to this `weigh` routine.
 
-メモリに関しては、更新対象の四フィールドと作業領域以外を保存する。分離論理の frame rule で表す。結果だけを述べて、書き換える資源の所有条件を省略しない。
+Preserve all memory except the four updated fields and scratch memory. Express this using the frame rule of separation logic. Do not state only the result while omitting ownership conditions for the resources being modified.
 
-## 7. ELF 出力と信頼境界
+## 7. ELF Output and Trust Boundaries
 
-初期版は、命令列の証明と ELF 出力、その ELF の Lean 製 RISC-V 実行器による動作確認までを扱う。命令列から ELF への変換・配置・ロードは、形式証明ではなくテストで確認する。一般 OS 向けのアプリケーションや特定 zkVM の guest SDK への対応は含めない。
+The initial version covers proofs of the instruction sequences, ELF output, and testing that ELF with the Lean-based RISC-V interpreter. Check conversion from instruction sequences to ELF, layout, and loading through tests rather than formal proofs. Support for general-purpose OS applications or a specific zkVM's guest SDK is out of scope.
 
-この ELF に収める処理の入口は、第3節の内部 ABI を維持する。検証用の入力状態と初期レジスタの準備、復帰の観測、結果の読み取りは検証用ハーネスの責務とし、CL の処理本体に SSZ 入出力や zkVM 固有のホストコールを追加しない。ハーネスの具体的な接続方法は ELF の配置・エントリ設計と合わせて確定する。
+The routine in the ELF retains the internal ABI from Section 3. A test harness is responsible for preparing the input state and initial registers, observing the return, and reading the results. Do not add SSZ input/output or zkVM-specific host calls to the CL routine itself. Finalize the harness interface together with the ELF layout and entry-point design.
 
-### 形式証明する範囲
+### Scope of Formal Proofs
 
-固定した `Program` と具体的な呼び出し契約について、bounded Hoare triple を Lean で証明する。小さなマクロだけでなく、モデル上の `weigh` 全体の結果、資源の保存、復帰までを合成する。
+Prove a bounded Hoare triple in Lean for a fixed `Program` and a concrete calling contract. Compose the proofs to cover the results, resource preservation, and return of the entire modeled `weigh` routine, not just its small macros.
 
-### テストで確認する範囲
+### Scope of Testing
 
-出力経路は `Program → アセンブリ文字列 → 既存の GNU アセンブラ・リンカ → ELF` とする。これは [evm-asm の出力処理](https://github.com/Verified-zkEVM/evm-asm/blob/7e65e4d024718f704226cd795f3d03d4e9aafe13/EvmAsm/Codegen/Driver.lean)を参考にする。
+The output path is `Program → assembly text → existing GNU assembler and linker → ELF`, following the approach in [evm-asm's output driver](https://github.com/Verified-zkEVM/evm-asm/blob/7e65e4d024718f704226cd795f3d03d4e9aafe13/EvmAsm/Codegen/Driver.lean).
 
-- 使用する命令形式について、期待するアセンブリ文字列が出力されることをテストする。
-- リンク後の対象ルーチンのバイト列を、証明対象の `Program` から別途出力・アセンブルしたバイト列と比較する。配置、エントリ、分岐先など、比較に用いるアドレスもリンク結果と照合する。
-- 出力 ELF を Lean 製 RISC-V 実行器で実行し、同じ入力に対する公式 Python の結果と比較する。
+- Test that each instruction form used emits the expected assembly text.
+- Compare the target routine's bytes in the linked ELF against bytes separately emitted and assembled from the `Program` used in the proof. Also check the addresses used for comparison, including layout, entry point, and branch targets, against the link results.
+- Run the generated ELF with the Lean-based RISC-V interpreter and compare its results with the official Python implementation on the same inputs.
 
-バイト照合は [evm-asm の照合スクリプト](https://github.com/Verified-zkEVM/evm-asm/blob/7e65e4d024718f704226cd795f3d03d4e9aafe13/scripts/check-guest-image-program-bytes.py)と同種のテストであり、Lean で検査の正しさを証明する方式は採用しない。同じ出力器・アセンブラを両側で使う照合では、両側に共通する変換バグを検出できない場合がある。出力形式のテストや実行結果の比較と併用するが、これらを形式証明とは呼ばない。
+The byte comparison is a test similar to [evm-asm's consistency-checking script](https://github.com/Verified-zkEVM/evm-asm/blob/7e65e4d024718f704226cd795f3d03d4e9aafe13/scripts/check-guest-image-program-bytes.py); do not require a Lean proof of the checker's correctness. A comparison that uses the same emitter and assembler on both sides may miss conversion bugs shared by both paths. Combine it with output-format tests and execution-result comparisons, but do not describe these as formal proofs.
 
-### 初期版では証明しない部分
+### Components Not Proved in the Initial Version
 
-出力器、アセンブラ、リンカ、ELF ローダ、バイト照合器を、実行 ELF に関する主張の信頼境界として記録する。これらの正しさや、個々の ELF がモデル上の命令列に対応することの形式証明は、初期版の完了条件から外す。evm-asm も、コード生成を意図的に形式証明の対象外としている。[evm-asm の信頼境界](https://github.com/Verified-zkEVM/evm-asm/blob/7e65e4d024718f704226cd795f3d03d4e9aafe13/DRIFT.md#trust-boundaries-unverified-by-design)
+Record the emitter, assembler, linker, ELF loader, and byte-comparison checker as trust boundaries for claims about the executable ELF. Formal proofs of these components, or of the correspondence between an individual ELF and the modeled instruction sequences, are not initial completion criteria. evm-asm also deliberately excludes code generation from its formal verification scope. See [evm-asm's trust boundaries](https://github.com/Verified-zkEVM/evm-asm/blob/7e65e4d024718f704226cd795f3d03d4e9aafe13/DRIFT.md#trust-boundaries-unverified-by-design).
 
-調査した `riscv-zkvm` には、命令レベルおよび一定の前提下での実行シミュレーションがある。一方、バイト列のデコーダと Sail の対応、実行用メモリ表現との対応などには未完了部分がある。[調査した版の検証範囲](https://github.com/Verified-zkEVM/riscv-zkvm/blob/afcbc45e1c74c2d296e032b5606dd977a304e8ad/docs/validation.md)
+The investigated `riscv-zkvm` revision provides instruction-level correspondence and execution simulation under specific assumptions. However, gaps remain in areas such as the correspondence between the byte decoder and Sail, and the executable memory representation. See the [validation scope of the investigated revision](https://github.com/Verified-zkEVM/riscv-zkvm/blob/afcbc45e1c74c2d296e032b5606dd977a304e8ad/docs/validation.md).
 
-これらの実行器側の未証明部分も明記するが、初期版のために解消する要件は設けない。ELF の具体的な配置、エントリ、テスト用のロード・復帰方法は、残る設計事項とする。
+Document these interpreter-side proof gaps, but do not require closing them for the initial version. The concrete ELF layout, entry point, and loading and return-observation methods for tests remain design work.
 
-Lean による命令列の正しさの証明と、zkVM による個々の実行の証明は別物。後者は初期版の完了条件に含めない。
+A Lean proof of instruction-sequence correctness is distinct from a zkVM proof of an individual execution. The latter is not an initial completion criterion.
 
-## 8. 初期版の検証計画
+## 8. Initial Validation Plan
 
-- 各マクロとルーチン全体の定理を Lean で検査する。未証明の部品契約を最上位定理の仮定として残したまま、完成と呼ばない。
-- 初期状態の前提が満たせる具体例を構成する。命令配置、領域分離、復帰先まで含め、空虚な事前条件を防ぐ。
-- 使用公理を依存も含めて記録する。`sorry` がないことだけを正しさの完了条件にしない。
-- 第7節の出力形式、バイト列、配置の照合テストを行う。意図的に不一致を与え、照合テストが失敗することも確認する。照合器自身の形式証明は要求しない。
-- 4-bit の全入力パターン、二つの閾値判定の組合せ、閾値の直前・一致・直後、各 finalization 条件を調べる。
-- checkpoint root に異なる値を入れ、更新前の値の保存と、後の条件による上書きを検査する。
-- root 配列の添字の折返し、時間範囲の境界、明示した整数範囲の境界を調べる。
-- 同じ入力について、固定した公式 Python の対象関数と、命令列／実行イメージの結果を比較する。
-- 出力した ELF を Lean 製 RISC-V 実行器でロードし、検証用ハーネスが同じ内部 ABI の入力を与えて結果を読み取る。これは ELF の動作確認であり、モデル内の命令列の証明は別に検査する。ELF との対応証明は初期版に要求しない。
-- 公式の epoch 処理テストを利用する場合、テスト対象に外側の残高集計等も含まれることに注意する。`weigh` の呼び出し時の引数と状態を抽出し、比較対象を一致させる。
-- 前提外の入力に関する差異は保証対象外として記録し、成功例の統計に混ぜない。
+- Check the theorems for every macro and the full routine in Lean. Do not call the work complete while leaving unproved component contracts as assumptions of the top-level theorem.
+- Construct a concrete witness that satisfies the initial-state preconditions, including instruction placement, region separation, and the return address, to avoid vacuous preconditions.
+- Record the axioms used, including those from dependencies. The absence of `sorry` alone is not a sufficient completion criterion for correctness.
+- Run the output-format, byte-comparison, and layout checks from Section 7. Introduce deliberate mismatches and confirm that the checks fail. A formal proof of the checker itself is not required.
+- Cover all four-bit input patterns, combinations of the two threshold outcomes, values just below, at, and above the thresholds, and each finalization condition.
+- Use distinct checkpoint roots to check preservation of old values and overwrites by later conditions.
+- Check root-array index wraparound, time-range boundaries, and the boundaries of the explicit integer ranges.
+- Compare the instruction sequence / executable image results against the pinned official Python function on the same inputs.
+- Load the generated ELF with the Lean-based RISC-V interpreter, and have the test harness supply inputs through the same internal ABI and read the results. This tests the ELF's behavior; check the modeled instruction-sequence proofs separately. A proof connecting the ELF to the model is not required for the initial version.
+- When reusing official epoch-processing tests, account for the fact that they also cover outer operations such as balance aggregation. Extract the arguments and state at the call to `weigh` so that the comparison targets match.
+- Record discrepancies on inputs outside the preconditions as outside the guarantee; do not include them in successful-case statistics.
 
-初期版の完了条件は、モデル内のルーチン証明が Lean で検査できること、ELF が生成できること、上記の出力・照合・動作比較テストが成功すること、証明範囲と信頼境界が記録されていること。ELF 対応の形式証明や zkVM の実行証明がないことは、初期版の未完了理由としない。
+The initial version is complete when the modeled routine's proofs check in Lean, ELF generation works, the output, consistency, and behavioral comparison tests above pass, and the proof scope and trust boundaries are documented. The absence of a formal ELF-correspondence proof or zkVM execution proofs does not make the initial version incomplete.
 
-## 9. 残る設計作業
+## 9. Remaining Design Work
 
-1. **ELF の配置・エントリと検証用ハーネス。** 第3節の内部 ABI に入力を与え、ルーチンからの復帰と結果を観測する方法を具体化する。確認方法はテストであり、ローダ等の形式証明は追加しない。
-2. **実装順序と段階ごとの成果物。** 契約・小さなマクロ・全体の合成・ELF 出力・比較テストの依存順に整理し、第8節の完了条件を割り当てる。
+1. **ELF layout, entry point, and test harness.** Specify how to supply inputs through the internal ABI from Section 3 and observe the routine's return and results. Validate these through tests; do not add formal proofs of the loader or similar components.
+2. **Implementation order and stage deliverables.** Organize contracts, small macros, full composition, ELF output, and comparison tests by dependency order, and assign the completion criteria from Section 8 to those stages.
 
-これらも本セッションでは設計のみを行い、実装を開始しない。
+This session remains limited to designing these items; do not begin implementation.
