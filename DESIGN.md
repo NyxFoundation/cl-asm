@@ -1,6 +1,6 @@
 # CL ASM v0 — Design Proposal
 
-Last updated: 2026-09-13. This document records the v0 design. The first implementation increment covers the `epochAtSlot` helper, its Lean proofs, and an executable ELF probe; see [Bootstrap Contract and Validation](docs/bootstrap.md). The complete `weigh` routine is not implemented yet.
+Last updated: 2026-09-13. This document records the v0 design. The implementation covers arithmetic and copying helpers, their Lean proofs, and seven executable ELF probes; see [Bootstrap Contract and Validation](docs/bootstrap.md) and [Helper Contracts and Validation](docs/helpers.md). The complete `weigh` routine is not implemented yet.
 
 ## 1. Agreed Scope
 

@@ -10,7 +10,8 @@ run_cmd do
   let mut audited : Nat := 0
   let mut observed : List Name := []
   for (name, _) in (← getEnv).constants.toList do
-    unless prefixes.any (·.isPrefixOf name) do continue
+    let userName := (privateToUserName? name).getD name
+    unless prefixes.any (·.isPrefixOf userName) do continue
     audited := audited + 1
     let axioms ← Lean.Elab.Command.liftCoreM (collectAxioms name)
     for axiomName in axioms do

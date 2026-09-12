@@ -32,6 +32,6 @@ jobs:
       - name: Generate and execute ELF
         run: |
           .lake/build/bin/cl-asm build
-          .lake/build/bin/cl-asm-test build/epoch-at-slot.elf
-      - name: Reject corrupted ELF images and tool failures
+          .lake/build/bin/cl-asm-test build
+      - name: Reject corrupted ELF images, tool failures, and forbidden axioms
         run: python3 -m unittest discover -s tests -v

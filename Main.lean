@@ -4,8 +4,9 @@ def main (args : List String) : IO UInt32 := do
   try
     match args with
     | [directory] =>
-      let path ← ClAsm.Codegen.build directory
-      IO.println s!"Generated {path}"
+      for kind in ClAsm.Probes.all do
+        let path ← ClAsm.Codegen.build directory kind
+        IO.println s!"Generated {path}"
       return 0
     | _ =>
       IO.eprintln "usage: cl-asm <output-directory>"

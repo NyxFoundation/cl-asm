@@ -15,12 +15,15 @@ ELF = ROOT / "build/epoch-at-slot.elf"
 
 
 class ElfRejectionTests(unittest.TestCase):
-    def assert_rejected(self, image: bytes, reason: str) -> None:
+    def assert_rejected(
+        self, image: bytes, reason: str, probe: str = "epoch-at-slot"
+    ) -> None:
         with tempfile.TemporaryDirectory(prefix="cl-asm-test-") as directory:
             path = Path(directory) / "mutated.elf"
             path.write_bytes(image)
             result = subprocess.run(
-                [str(RUNNER), str(path)], capture_output=True, text=True, check=False
+                [str(RUNNER), probe, str(path)],
+                capture_output=True, text=True, check=False
             )
         self.assertEqual(result.returncode, 1)
         self.assertIn(reason, result.stderr)
@@ -70,6 +73,21 @@ class ElfRejectionTests(unittest.TestCase):
     def test_should_reject_image_when_instruction_operand_changes(self) -> None:
         offset = struct.unpack_from("<Q", ELF.read_bytes(), self.program_header() + 8)[0]
         self.assert_rejected(self.mutate(offset + 4, 0x0062D293, "I"), "instruction bytes mismatch")
+
+    def test_should_reject_every_probe_when_return_instruction_changes(self) -> None:
+        probes = ["epoch-at-slot", "previous-epoch", "shift-justification-bits",
+                  "has-supermajority", "block-root-address", "copy-checkpoint", "copy-root"]
+        for probe in probes:
+            with self.subTest(probe=probe):
+                image = bytearray((ROOT / "build" / f"{probe}.elf").read_bytes())
+                base = struct.unpack_from("<Q", image, 0x20)[0]
+                size, count = struct.unpack_from("<HH", image, 0x36)
+                header = next(base + i * size for i in range(count)
+                              if struct.unpack_from("<I", image, base + i * size)[0] == 1)
+                offset = struct.unpack_from("<Q", image, header + 8)[0]
+                length = struct.unpack_from("<Q", image, header + 0x20)[0]
+                struct.pack_into("<I", image, offset + length - 4, 0x0000006F)
+                self.assert_rejected(bytes(image), "instruction bytes mismatch", probe)
 
     def test_should_fail_generation_when_assembler_fails(self) -> None:
         with tempfile.TemporaryDirectory(prefix="cl-asm-test-") as directory:

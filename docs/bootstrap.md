@@ -9,10 +9,10 @@ tags:
 
 # Bootstrap Contract and Validation
 
-This increment establishes the build, proof, code-generation, and execution
-path for `epochAtSlot`. It implements the foundation stage of the v0 plan,
-plus this first helper's contract and proof. It does not implement `weigh` or
-its whole-state contract.
+The foundation establishes the build, proof, code-generation, and execution
+path for `epochAtSlot`. The [helper stage](helpers.md) extends that path to six
+more callable probes. The complete `weigh` routine and its whole-state contract
+remain subsequent work.
 
 ## Callable probe
 
@@ -93,7 +93,7 @@ loader, and consistency checks also remain outside the formal proof.
 
 ## Next increment
 
-Define the complete checkpoint/state memory assertions and the arithmetic
-preconditions for `weigh`; then implement and prove `previousEpoch`,
-`shiftJustificationBits`, `hasSupermajority`, checkpoint copying, and root
-access before composing the justification and finalization branches.
+The helper stage now supplies checkpoint/root ownership, arithmetic macros,
+root addressing, copying, bounded callable proofs, and ELF tests. Next, define
+the complete state and root-array assertions and arithmetic preconditions for
+`weigh`, then compose justification and finalization in their specified order.
