@@ -1,0 +1,19 @@
+name = "ClAsm"
+version = "0.1.0"
+defaultTargets = ["ClAsm", "cl-asm", "cl-asm-test"]
+
+[[require]]
+name = "riscv-zkvm"
+git = "https://github.com/Verified-zkEVM/riscv-zkvm"
+rev = "afcbc45e1c74c2d296e032b5606dd977a304e8ad"
+
+[[lean_lib]]
+name = "ClAsm"
+
+[[lean_exe]]
+name = "cl-asm"
+root = "Main"
+
+[[lean_exe]]
+name = "cl-asm-test"
+root = "TestMain"

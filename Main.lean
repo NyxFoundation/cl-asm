@@ -1,0 +1,15 @@
+import ClAsm.Codegen
+
+def main (args : List String) : IO UInt32 := do
+  try
+    match args with
+    | [directory] =>
+      let path ← ClAsm.Codegen.build directory
+      IO.println s!"Generated {path}"
+      return 0
+    | _ =>
+      IO.eprintln "usage: cl-asm <output-directory>"
+      return 1
+  catch _ =>
+    IO.eprintln "ELF generation failed; check the output directory and RISCV_AS/RISCV_LD tools"
+    return 1
