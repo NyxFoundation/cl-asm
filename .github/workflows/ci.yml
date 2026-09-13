@@ -27,11 +27,15 @@ jobs:
           use-github-cache: false
       - name: Build and check proofs from source
         run: lake --no-cache --wfail build
+      - name: Install the pinned official reference types
+        run: |
+          python3 -m venv .venv
+          .venv/bin/python -m pip install -r tests/requirements.txt
       - name: Audit axioms including imported model declarations
         run: lake env lean scripts/CheckAxioms.lean
       - name: Generate and execute ELF
         run: |
           .lake/build/bin/cl-asm build
           .lake/build/bin/cl-asm-test build
-      - name: Reject corrupted ELF images, tool failures, and forbidden axioms
-        run: python3 -m unittest discover -s tests -v
+      - name: Compare the full routine and reject malformed executions
+        run: .venv/bin/python -m unittest discover -s tests -v

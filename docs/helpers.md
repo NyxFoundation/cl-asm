@@ -102,11 +102,9 @@ Negative tests inject unused public and private axioms and require rejection.
 Only `propext`, `Classical.choice`, and `Quot.sound` are permitted. ELF generation
 and interpreter conversion retain the [bootstrap trust boundaries](bootstrap.md).
 
-## Following stage
+## Whole routine
 
-Define the complete state and root-array ownership contract, including the
-specified arithmetic and temporal preconditions. Compose both justification
-updates and all four finalization checks, prove the entire bounded `weigh`
-contract with a concrete calling witness, and compare the generated routine
-against the pinned official Python function. These whole-routine guarantees
-are not provided by the helper probes.
+The [complete `weigh` contract](weigh.md) composes these helpers with both
+justification updates and all four finalization checks. It includes the state
+and root-array ownership, arithmetic and temporal preconditions, a bounded
+return proof, a concrete calling witness, and official Python differential tests.

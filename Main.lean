@@ -1,12 +1,15 @@
 import ClAsm.Codegen
+import ClAsm.Weigh.Program
 
 def main (args : List String) : IO UInt32 := do
   try
     match args with
     | [directory] =>
       for kind in ClAsm.Probes.all do
-        let path ← ClAsm.Codegen.build directory kind
+        let path ← ClAsm.Codegen.build directory kind.name kind.program
         IO.println s!"Generated {path}"
+      let path ← ClAsm.Codegen.build directory "weigh" ClAsm.Weigh.program
+      IO.println s!"Generated {path}"
       return 0
     | _ =>
       IO.eprintln "usage: cl-asm <output-directory>"

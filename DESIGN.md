@@ -1,6 +1,6 @@
 # CL ASM v0 — Design Proposal
 
-Last updated: 2026-09-13. This document records the v0 design. The implementation covers arithmetic and copying helpers, their Lean proofs, and seven executable ELF probes; see [Bootstrap Contract and Validation](docs/bootstrap.md) and [Helper Contracts and Validation](docs/helpers.md). The complete `weigh` routine is not implemented yet.
+Last updated: 2026-09-13. This document records the v0 design. The complete 175-instruction `weigh` routine, bounded Lean contract, concrete calling witness, ELF, and official-reference differential tests are implemented; see [Whole-Routine Contract and Validation](docs/weigh.md). The [completion plan](docs/implementation-plan.md) tracks validation and benchmark evidence.
 
 ## 1. Agreed Scope
 

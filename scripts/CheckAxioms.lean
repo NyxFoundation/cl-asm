@@ -2,6 +2,7 @@ import Lean
 import ClAsm
 import ClAsm.Codegen
 import ClAsm.Harness
+import ClAsm.Weigh.Benchmark
 
 open Lean in
 run_cmd do

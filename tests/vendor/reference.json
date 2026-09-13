@@ -1,0 +1,23 @@
+{
+  "revision": "530cf56a3920dc048900b4b7a408b3acd71331fa",
+  "path": "specs/phase0/beacon-chain.md",
+  "source_sha256": "95bbeca116dfc60ee75c1713d32409e29854de2340a71ee325ff7257f4412483",
+  "extracted_sha256": "209d6f6469d73dfc2a371a3f3be9797c567ff29b996775b15a83ccfa08d6baff",
+  "definitions": [
+    "Epoch",
+    "Slot",
+    "Gwei",
+    "Root",
+    "BlockRoots",
+    "JustificationBits",
+    "Checkpoint",
+    "compute_epoch_at_slot",
+    "compute_start_slot_at_epoch",
+    "get_current_epoch",
+    "get_previous_epoch",
+    "get_block_root",
+    "get_block_root_at_slot",
+    "weigh_justification_and_finalization"
+  ],
+  "ssz_package": "eth-ssz-specs==0.1.0"
+}

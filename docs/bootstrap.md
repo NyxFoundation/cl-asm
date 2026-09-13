@@ -11,8 +11,8 @@ tags:
 
 The foundation establishes the build, proof, code-generation, and execution
 path for `epochAtSlot`. The [helper stage](helpers.md) extends that path to six
-more callable probes. The complete `weigh` routine and its whole-state contract
-remain subsequent work.
+more callable probes. The [whole-routine contract](weigh.md) documents the
+complete `weigh` implementation built on this foundation.
 
 ## Callable probe
 
@@ -23,7 +23,7 @@ calling conditions require a nonzero destination and distinct registers.
 
 `EpochAtSlot.callable` adds `jalr x0, 0(ra)`. This probe uses `a0` for the state
 pointer and `t0` for the computed epoch; it preserves `a0`. It is named
-`epoch_at_slot` in the ELF, and is not the future `weigh` entry point. There is
+`epoch_at_slot` in the ELF, independently of the `weigh` entry point. There is
 no scalar-result convention added to the `weigh` ABI.
 
 `callable_spec` proves a bounded Hoare triple tied to `CodeReq.ofProg` of that
@@ -60,7 +60,7 @@ The ELF contains one read-only executable load segment. The harness supplies
 memory and registers, checks for return before the next fetch, and never uses
 ECALL or a zkVM exit protocol. The root array and scratch are populated with
 sentinels so unintended writes are visible. These fixtures exercise the helper;
-they are not claimed to satisfy the future full `weigh` preconditions.
+they are not claimed to satisfy the full `weigh` preconditions.
 
 ## Validation and trust boundaries
 
@@ -74,9 +74,9 @@ the loaded decoded instructions are also compared with the `Program`.
 The interpreter executes the image for boundary and deterministic sample
 inputs. Negative tests deliberately corrupt metadata, instruction bytes, and
 modeled executions so that the checks must reject errors. These tests do not
-constitute an ELF-to-model proof. Official Python differential testing of
-`weigh` remains a later stage; this helper uses mathematical integer division
-as its independently evaluated expected result.
+constitute an ELF-to-model proof. This helper uses mathematical integer division
+as its independently evaluated expected result; the [full routine](weigh.md)
+has separate official Python differential tests.
 
 `scripts/CheckAxioms.lean` checks compiled declarations in the project and the
 imported RV64 model, logic, and interpreter namespaces. Only `propext`,
@@ -91,9 +91,9 @@ remain relevant: decoding-to-Sail correspondence and the efficient execution
 state's simulation are not proved. The emitter, GNU assembler/linker, ELF
 loader, and consistency checks also remain outside the formal proof.
 
-## Next increment
+## Whole routine
 
 The helper stage now supplies checkpoint/root ownership, arithmetic macros,
-root addressing, copying, bounded callable proofs, and ELF tests. Next, define
-the complete state and root-array assertions and arithmetic preconditions for
-`weigh`, then compose justification and finalization in their specified order.
+root addressing, copying, bounded callable proofs, and ELF tests. These are
+composed into the [complete `weigh` contract](weigh.md), including the state,
+root-array ownership, arithmetic conditions, and ordered conditional updates.

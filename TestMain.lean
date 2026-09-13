@@ -20,6 +20,11 @@ private def shouldEmitExactInstructionForms : IO Unit := do
   check ((Codegen.emitInstr (.XORI .x5 .x5 1)).toOption == some "xori x5, x5, 1") "XORI emission"
   check ((Codegen.emitInstr (.ADD .x5 .x10 .x5)).toOption == some "add x5, x10, x5") "ADD emission"
   check ((Codegen.emitInstr (.SLTU .x5 .x5 .x6)).toOption == some "sltu x5, x5, x6") "SLTU emission"
+  check ((Codegen.emitInstr (.ORI .x28 .x28 2)).toOption == some "ori x28, x28, 2") "ORI emission"
+  check ((Codegen.emitInstr (.XOR .x31 .x31 .x16)).toOption == some "xor x31, x31, x16") "XOR emission"
+  check ((Codegen.emitInstr (.AND .x29 .x29 .x31)).toOption == some "and x29, x29, x31") "AND emission"
+  check ((Codegen.emitInstr (.BNE .x29 .x0 8)).toOption == some "bne x29, x0, . + 8") "BNE emission"
+  check ((Codegen.emitInstr (.JAL .x0 60)).toOption == some "jal x0, . + 60") "JAL emission"
   check (Codegen.emitInstr .ECALL |>.toOption.isNone) "unsupported instructions must fail"
 
 private def shouldRejectBadExecution (path : System.FilePath) : IO Unit := do
