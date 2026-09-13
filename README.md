@@ -47,3 +47,4 @@ The Lean proofs cover the modeled instruction sequence. ELF generation,
 decoding, loading, and execution-state conversion are checked by tests and are
 not formally proved. Benchmarks report RV64 instruction counts separately from
 host interpreter time; they do not measure native RV64 or zkVM proving.
+See [the recorded results and reproduction steps](docs/benchmarks.md).

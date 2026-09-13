@@ -1,0 +1,387 @@
+{
+  "timestamp": "2026-09-13T10:19:32.283821+00:00",
+  "revision": "8bd979798a735ac094cd45bf55cffe4b1a676935",
+  "workingTreeDirty": false,
+  "elfSha256": "5ed4f9c4c39b56d8149ee744bc39ab62fe84a172e39311ea11480c2cafe961af",
+  "instructionBytes": 700,
+  "platform": "Linux-7.0.12+kali-amd64-x86_64-with-glibc2.42",
+  "cpu": "AMD Ryzen 9 PRO 8945HS w/ Radeon 780M Graphics",
+  "python": "3.12.13",
+  "lean": "leanprover/lean4:v4.33.0",
+  "ssz": "0.1.0",
+  "method": "100 warmup calls; batches exclude loading, input preparation, JSON, and full preservation checks; include interpreter, temporary-register reset, checksum; no zkVM proving or native RV64 timing",
+  "measurements": {
+    "no-updates": {
+      "batchNanoseconds": [
+        439505193,
+        457785386,
+        490369466,
+        483919571,
+        484984644,
+        430346414,
+        465099591,
+        414353447,
+        432359993,
+        420644487,
+        417697271,
+        441150105,
+        423752901,
+        442443672,
+        416385919,
+        440658598,
+        451389773,
+        481681597,
+        488625950,
+        457773174,
+        460096719
+      ],
+      "checksum": 415800,
+      "iterationsPerBatch": 200,
+      "result": {
+        "bits": 0,
+        "current": {
+          "epoch": 7,
+          "root": [
+            55,
+            66,
+            77,
+            88
+          ]
+        },
+        "finalized": {
+          "epoch": 0,
+          "root": [
+            99,
+            111,
+            222,
+            333
+          ]
+        },
+        "previous": {
+          "epoch": 7,
+          "root": [
+            55,
+            66,
+            77,
+            88
+          ]
+        },
+        "slot": 257,
+        "steps": 99
+      },
+      "medianNanosecondsPerCall": 2212218.36,
+      "minNanosecondsPerCall": 2071767.235,
+      "maxNanosecondsPerCall": 2451847.33
+    },
+    "previous-only": {
+      "batchNanoseconds": [
+        568148798,
+        584365230,
+        567928336,
+        597787013,
+        597407908,
+        576356975,
+        589588844,
+        639291655,
+        658553598,
+        670264555,
+        576217344,
+        574742199,
+        590346143,
+        581033150,
+        624142808,
+        624478614,
+        564564987,
+        613344009,
+        647570125,
+        640173376,
+        623099748
+      ],
+      "checksum": 478800,
+      "iterationsPerBatch": 200,
+      "result": {
+        "bits": 2,
+        "current": {
+          "epoch": 7,
+          "root": [
+            1234605616436508552,
+            224,
+            1234605616436508520,
+            1161981756646125920
+          ]
+        },
+        "finalized": {
+          "epoch": 0,
+          "root": [
+            99,
+            111,
+            222,
+            333
+          ]
+        },
+        "previous": {
+          "epoch": 7,
+          "root": [
+            55,
+            66,
+            77,
+            88
+          ]
+        },
+        "slot": 257,
+        "steps": 112
+      },
+      "medianNanosecondsPerCall": 2987039.54,
+      "minNanosecondsPerCall": 2822824.935,
+      "maxNanosecondsPerCall": 3351322.775
+    },
+    "current-only": {
+      "batchNanoseconds": [
+        603745513,
+        603950935,
+        588506589,
+        604711592,
+        576599316,
+        578572109,
+        629430009,
+        662692451,
+        651086369,
+        575535745,
+        589574246,
+        601176431,
+        644139769,
+        635673562,
+        591819856,
+        595062572,
+        591016742,
+        666259971,
+        663811344,
+        605872412,
+        571975700
+      ],
+      "checksum": 474600,
+      "iterationsPerBatch": 200,
+      "result": {
+        "bits": 1,
+        "current": {
+          "epoch": 8,
+          "root": [
+            1234605616436508552,
+            256,
+            1234605616436508296,
+            1161981756646125952
+          ]
+        },
+        "finalized": {
+          "epoch": 0,
+          "root": [
+            99,
+            111,
+            222,
+            333
+          ]
+        },
+        "previous": {
+          "epoch": 7,
+          "root": [
+            55,
+            66,
+            77,
+            88
+          ]
+        },
+        "slot": 257,
+        "steps": 112
+      },
+      "medianNanosecondsPerCall": 3018727.565,
+      "minNanosecondsPerCall": 2859878.5,
+      "maxNanosecondsPerCall": 3331299.855
+    },
+    "both-justified": {
+      "batchNanoseconds": [
+        729080730,
+        763533889,
+        715989352,
+        700818726,
+        736658305,
+        802535451,
+        784817443,
+        714739878,
+        772380324,
+        738824085,
+        722262341,
+        711008942,
+        729772016,
+        763495996,
+        800182383,
+        736715660,
+        766823831,
+        806902290,
+        726517899,
+        707710363,
+        722920474
+      ],
+      "checksum": 537600,
+      "iterationsPerBatch": 200,
+      "result": {
+        "bits": 3,
+        "current": {
+          "epoch": 8,
+          "root": [
+            1234605616436508552,
+            256,
+            1234605616436508296,
+            1161981756646125952
+          ]
+        },
+        "finalized": {
+          "epoch": 0,
+          "root": [
+            99,
+            111,
+            222,
+            333
+          ]
+        },
+        "previous": {
+          "epoch": 8,
+          "root": [
+            55,
+            66,
+            77,
+            88
+          ]
+        },
+        "slot": 257,
+        "steps": 125
+      },
+      "medianNanosecondsPerCall": 3683291.525,
+      "minNanosecondsPerCall": 3504093.63,
+      "maxNanosecondsPerCall": 4034511.45
+    },
+    "two-finalizations": {
+      "batchNanoseconds": [
+        1118667689,
+        1095252557,
+        1004353806,
+        970676393,
+        996380135,
+        991454057,
+        1045857116,
+        1119323930,
+        992596693,
+        1000546529,
+        999760237,
+        995138555,
+        999816982,
+        1114374809,
+        983779150,
+        982944328,
+        985732608,
+        1006379146,
+        970602736,
+        1124863882,
+        1054058813
+      ],
+      "checksum": 680400,
+      "iterationsPerBatch": 200,
+      "result": {
+        "bits": 15,
+        "current": {
+          "epoch": 8,
+          "root": [
+            1234605616436508552,
+            256,
+            1234605616436508296,
+            1161981756646125952
+          ]
+        },
+        "finalized": {
+          "epoch": 7,
+          "root": [
+            55,
+            66,
+            77,
+            88
+          ]
+        },
+        "previous": {
+          "epoch": 7,
+          "root": [
+            55,
+            66,
+            77,
+            88
+          ]
+        },
+        "slot": 257,
+        "steps": 147
+      },
+      "medianNanosecondsPerCall": 4999084.91,
+      "minNanosecondsPerCall": 4853013.68,
+      "maxNanosecondsPerCall": 5624319.41
+    },
+    "genesis-shared-root": {
+      "batchNanoseconds": [
+        702161165,
+        732866025,
+        709613496,
+        725206399,
+        708254796,
+        783013705,
+        816136047,
+        765115361,
+        749940306,
+        727395674,
+        721708588,
+        752921655,
+        707334956,
+        717618526,
+        784094708,
+        818269687,
+        705664867,
+        717411811,
+        708685919,
+        710697093,
+        718465673
+      ],
+      "checksum": 537600,
+      "iterationsPerBatch": 200,
+      "result": {
+        "bits": 3,
+        "current": {
+          "epoch": 0,
+          "root": [
+            1234605616436508552,
+            0,
+            1234605616436508552,
+            1161981756646125696
+          ]
+        },
+        "finalized": {
+          "epoch": 0,
+          "root": [
+            99,
+            111,
+            222,
+            333
+          ]
+        },
+        "previous": {
+          "epoch": 0,
+          "root": [
+            55,
+            66,
+            77,
+            88
+          ]
+        },
+        "slot": 1,
+        "steps": 125
+      },
+      "medianNanosecondsPerCall": 3608542.94,
+      "minNanosecondsPerCall": 3510805.825,
+      "maxNanosecondsPerCall": 4091348.435
+    }
+  }
+}

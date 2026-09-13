@@ -21,8 +21,8 @@ benchmarks. Helper proofs and passing helper tests alone do not complete it.
 | ELF | Same ABI, independent byte and branch checks, GNU assembly, interpreter execution | Complete |
 | Official differential tests | Pinned source and real SSZ types; 4,796 admitted cases and failure boundaries | Complete: all 19 Python tests pass |
 | Negative checks and axiom audit | Imported/private declarations and deliberate corruption | Complete: 4,165 declarations, only three standard axioms |
-| Benchmarks | Reproducible commands, hardware/tool revisions, RV64 steps and host runtime separated | Pending |
-| Final review | Requirement-by-requirement audit, clean commit/PR, successful CI | Pending |
+| Benchmarks | Clean revision, ELF hash, raw batches, environment, separate RV64/host measurements | Complete: [results and reproduction](benchmarks.md) |
+| Final review | Requirement audit, source build, tests, axiom audit, workflow lint | Complete locally; [PR #2 checks](https://github.com/NyxFoundation/cl-asm/pull/2/checks) gate delivery |
 
 The [whole-routine contract](weigh.md) records the input mapping, preservation,
 proof composition, inhabited witness, official-reference extraction, and trust
