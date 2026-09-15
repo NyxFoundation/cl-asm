@@ -1,5 +1,4 @@
 .lake/
-gen-out/
-*.ilean
-*.olean
-*.trace
+build/
+__pycache__/
+.venv/

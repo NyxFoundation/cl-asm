@@ -1,49 +1,39 @@
-import ClAsm.Rv64
+import RiscvZkvm.Rv64.Program
 
 namespace ClAsm.Codegen
 
-open ClAsm.Rv64
+open RiscvZkvm.Rv64
 
-def emitReg (reg : Reg) : String :=
-  reg.abiName
+/-- Only supported real instructions are emitted; pseudoinstructions cannot
+    silently change the size or meaning of the proved Program. -/
+def emitInstr : Instr → Except String String
+  | .LD dst src offset => .ok s!"ld x{dst.toNat}, {offset.toInt}(x{src.toNat})"
+  | .SD dst src offset => .ok s!"sd x{src.toNat}, {offset.toInt}(x{dst.toNat})"
+  | .SRLI dst src shift => .ok s!"srli x{dst.toNat}, x{src.toNat}, {shift.toNat}"
+  | .SLLI dst src shift => .ok s!"slli x{dst.toNat}, x{src.toNat}, {shift.toNat}"
+  | .SLTIU dst src imm => .ok s!"sltiu x{dst.toNat}, x{src.toNat}, {imm.toInt}"
+  | .ADDI dst src imm => .ok s!"addi x{dst.toNat}, x{src.toNat}, {imm.toInt}"
+  | .ANDI dst src imm => .ok s!"andi x{dst.toNat}, x{src.toNat}, {imm.toInt}"
+  | .XORI dst src imm => .ok s!"xori x{dst.toNat}, x{src.toNat}, {imm.toInt}"
+  | .ORI dst src imm => .ok s!"ori x{dst.toNat}, x{src.toNat}, {imm.toInt}"
+  | .ADD dst src1 src2 => .ok s!"add x{dst.toNat}, x{src1.toNat}, x{src2.toNat}"
+  | .SLTU dst src1 src2 => .ok s!"sltu x{dst.toNat}, x{src1.toNat}, x{src2.toNat}"
+  | .XOR dst src1 src2 => .ok s!"xor x{dst.toNat}, x{src1.toNat}, x{src2.toNat}"
+  | .AND dst src1 src2 => .ok s!"and x{dst.toNat}, x{src1.toNat}, x{src2.toNat}"
+  | .BNE src1 src2 offset => .ok s!"bne x{src1.toNat}, x{src2.toNat}, . + {offset.toInt}"
+  | .JAL dst offset => .ok s!"jal x{dst.toNat}, . + {offset.toInt}"
+  | .JALR dst src offset => .ok s!"jalr x{dst.toNat}, {offset.toInt}(x{src.toNat})"
+  | _ => .error "unsupported RISC-V instruction"
 
-private def emitMem (offset : Int) (base : Reg) : String :=
-  toString offset ++ "(" ++ emitReg base ++ ")"
+def symbolName (name : String) : String :=
+  name.replace "-" "_"
 
-def emitInstr : Instr -> String
-  | .label name => name ++ ":"
-  | .comment text => "  # " ++ text
-  | .raw asm => asm
-  | .li rd imm => "  li " ++ emitReg rd ++ ", " ++ toString imm
-  | .la rd symbol => "  la " ++ emitReg rd ++ ", " ++ symbol
-  | .mv rd rs => "  mv " ++ emitReg rd ++ ", " ++ emitReg rs
-  | .add rd rs1 rs2 => "  add " ++ emitReg rd ++ ", " ++ emitReg rs1 ++ ", " ++ emitReg rs2
-  | .addi rd rs1 imm => "  addi " ++ emitReg rd ++ ", " ++ emitReg rs1 ++ ", " ++ toString imm
-  | .sub rd rs1 rs2 => "  sub " ++ emitReg rd ++ ", " ++ emitReg rs1 ++ ", " ++ emitReg rs2
-  | .slli rd rs shamt => "  slli " ++ emitReg rd ++ ", " ++ emitReg rs ++ ", " ++ toString shamt
-  | .srli rd rs shamt => "  srli " ++ emitReg rd ++ ", " ++ emitReg rs ++ ", " ++ toString shamt
-  | .andi rd rs imm => "  andi " ++ emitReg rd ++ ", " ++ emitReg rs ++ ", " ++ toString imm
-  | .ori rd rs imm => "  ori " ++ emitReg rd ++ ", " ++ emitReg rs ++ ", " ++ toString imm
-  | .ld rd base offset => "  ld " ++ emitReg rd ++ ", " ++ emitMem offset base
-  | .sd rs base offset => "  sd " ++ emitReg rs ++ ", " ++ emitMem offset base
-  | .lbu rd base offset => "  lbu " ++ emitReg rd ++ ", " ++ emitMem offset base
-  | .sb rs base offset => "  sb " ++ emitReg rs ++ ", " ++ emitMem offset base
-  | .beq rs1 rs2 target => "  beq " ++ emitReg rs1 ++ ", " ++ emitReg rs2 ++ ", " ++ target
-  | .bne rs1 rs2 target => "  bne " ++ emitReg rs1 ++ ", " ++ emitReg rs2 ++ ", " ++ target
-  | .bltu rs1 rs2 target => "  bltu " ++ emitReg rs1 ++ ", " ++ emitReg rs2 ++ ", " ++ target
-  | .j target => "  j " ++ target
-  | .ret => "  ret"
-  | .ecall => "  ecall"
-
-def emitProgramLines (program : Program) : List String :=
-  program.map emitInstr
-
-private def joinLines : List String -> String
-  | [] => ""
-  | [line] => line
-  | line :: rest => line ++ "\n" ++ joinLines rest
-
-def emitProgram (program : Program) : String :=
-  joinLines (emitProgramLines program)
+def assembly (name : String) (program : Program) : Except String String := do
+  let symbol := symbolName name
+  let lines ← program.mapM emitInstr
+  return ".option norvc\n.option norelax\n.section .text\n.balign 4\n" ++
+    s!".globl {symbol}\n.type {symbol}, @function\n{symbol}:\n" ++
+    String.join (lines.map (fun line => s!"  {line}\n")) ++
+    s!".size {symbol}, . - {symbol}\n"
 
 end ClAsm.Codegen

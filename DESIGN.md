@@ -1,10 +1,10 @@
 # CL ASM v0 — Design Proposal
 
-Last updated: 2026-09-16. This is primarily a design document. The repository now includes an evm-asm-shaped Lean scaffold for naming and layout, but the routine body, ELF linking, compilation, and proof checking are not complete yet.
+Last updated: 2026-09-13. This document records the v0 design. The complete 175-instruction `weigh` routine, bounded Lean contract, concrete calling witness, ELF, and official-reference differential tests are implemented; see [Whole-Routine Contract and Validation](docs/weigh.md). The [completion plan](docs/implementation-plan.md) tracks validation and benchmark evidence.
 
 ## 1. Agreed Scope
 
-- The first implementation stage is limited to repository structure, naming, and scaffolding that mirrors evm-asm.
+- Implement the design in staged, independently validated increments.
 - The initial target is `weigh_justification_and_finalization` and the small helpers needed to implement it.
 - Treat each operation as a combination of a RISC-V instruction sequence, a memory representation, preconditions and postconditions, and a proof.
 - Do not require a separate CL specification repository or a second Lean implementation of the entire consensus layer.
@@ -194,4 +194,4 @@ The initial version is complete when the modeled routine's proofs check in Lean,
 1. **ELF layout, entry point, and test harness.** Specify how to supply inputs through the internal ABI from Section 3 and observe the routine's return and results. Validate these through tests; do not add formal proofs of the loader or similar components.
 2. **Implementation order and stage deliverables.** Organize contracts, small macros, full composition, ELF output, and comparison tests by dependency order, and assign the completion criteria from Section 8 to those stages.
 
-The evm-asm-shaped scaffold is now present. The remaining work is to replace placeholder program builders with instruction sequences, prove the component contracts, wire real ELF linking, and run the validation plan above.
+The first increment's concrete layout, return observation, deliverables, and validation are recorded in [Bootstrap Contract and Validation](docs/bootstrap.md). Extend that foundation to the complete `weigh` routine in subsequent increments.
