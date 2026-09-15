@@ -1,0 +1,5 @@
+.lake/
+gen-out/
+*.ilean
+*.olean
+*.trace

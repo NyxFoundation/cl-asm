@@ -1,0 +1,11 @@
+name = "ClAsm"
+version = "0.1.0"
+defaultTargets = ["ClAsm"]
+
+[[lean_lib]]
+name = "ClAsm"
+
+[[lean_exe]]
+name = "codegen"
+root = "Main"
+supportInterpreter = true
