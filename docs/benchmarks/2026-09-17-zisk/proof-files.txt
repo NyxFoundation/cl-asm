@@ -1,0 +1,8 @@
+# bytes  sha256  path (parupunte-system, listed 2026-09-17)
+414647  9211339cd66c68218ae8c3430ccc03490fdef1fa38809491d13bf3a8753ed357  smoke/no-updates.cpu.proof
+414673  aabf67f167c1a5a0614e8353d754e71820d832b0f51c8b5431fd44fad63673d8  results/both-justified.proof.gpu-full
+414673  3c73e01811d3b40ac792d0d28f089f5993dd71e31ddc28efac0f2329de52dd02  results/current-only.proof.gpu-full
+414669  93af7a175334c208609e2242a2af63c1d23b272ace72bc5c9f2c526d87e193a2  results/genesis-shared-root.proof.gpu-full
+414647  0d3850517c8486f5da9b231bae92374489175a7deb68471bf974d3226a10d192  results/no-updates.proof.gpu-full
+414671  668390e366e96dfc2247e6e6058f1d2f1cf04474ae8bfb591745efe77401d5cf  results/previous-only.proof.gpu-full
+414671  fabf4f17e4ab95c752d8a129fb883e929dcc106fd9eed285822993d4f9c5137f  results/two-finalizations.proof.gpu-full
