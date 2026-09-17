@@ -1,0 +1,68 @@
+$ /home/parupunte/cl-asm-gpu-20260914-1600/zisk/bin/ziskemu -e /home/parupunte/cl-asm-zisk-20260917/build/zisk/weigh-guest.elf -i /home/parupunte/cl-asm-zisk-20260917/build/zisk/inputs/genesis-shared-root.bin -X -S
+--- stdout
+Loading symbols from ELF file: /home/parupunte/cl-asm-zisk-20260917/build/zisk/weigh-guest.elf
+Loaded symbols from ELF file: heap 0x0 - 0x0 (0 bytes), ZISK_BUMP_HEAP_POS @ 0x0
+Loaded 3 function symbols (0 marked as selected ROI)
+
+REPORT                                  
+----------------------------------------
+STEPS                             74,433
+
+COST DISTRIBUTION                   COST       %
+------------------------------------------------
+MAIN                           5,061,444   1.72%
+OPCODES                        1,429,247   0.49%
+PRECOMPILES                            0   0.00%
+MEMORY                           606,868   0.21%
+                        ------------------------
+VARIABLE                       7,097,559   2.41%
+BASE                         287,309,824  97.59%
+                        ------------------------
+TOTAL                        294,407,383 100.00%
+
+FROPS                             22,828   0.32%
+ROM USAGE                            474   0.01%
+
+COST BY BASE OPCODE                COUNT       %            COST       %
+------------------------------------------------------------------------
+OP eq                              8,213  11.03%         492,780   6.94%
+OP xor                             8,192  11.01%         491,520   6.93%
+OP add                            24,129  32.42%         443,895   6.25%
+OP ltu                                 7   0.01%             420   0.01%
+OP and                                 4   0.01%             240   0.00%
+OP srl                                 4   0.01%             224   0.00%
+OP sll                                 3   0.00%             168   0.00%
+OP pubout                             32   0.04%               0   0.00%
+OP fcall_param                         2   0.00%               0   0.00%
+OP fcall                               2   0.00%               0   0.00%
+
+COST BY PRECOMPILED OPCODE           COUNT       %            COST       %
+--------------------------------------------------------------------------
+
+FROPS BY OPCODE                    COUNT    HIT            COST       %
+-----------------------------------------------------------------------
+FROP add                             588   2.38%          14,700   0.21%
+FROP eq                               58   0.70%           3,480   0.05%
+FROP srl                              28  87.50%           1,568   0.02%
+FROP ltu                              16  69.57%             960   0.01%
+FROP and                              12  75.00%             720   0.01%
+FROP xor                              10   0.12%             600   0.01%
+FROP sll                              10  76.92%             560   0.01%
+FROP or                                2 100.00%             120   0.00%
+FROP lt                                1 100.00%              60   0.00%
+FROP sub                               1 100.00%              60   0.00%
+
+TOP STEP FUNCTIONS (STEPS, % STEPS, CALLS, STEPS/CALL, FUNCTION)
+----------------------------------------------------------------
+         74,248  99.75%          1          74,248 guest_main
+            125   0.17%          1             125 weigh
+
+TOP COST FUNCTIONS (COST, % VARIABLE COST, CALLS, COST/CALL, FUNCTION)
+----------------------------------------------------------------------
+      7,083,692  99.80%          1       7,083,692 guest_main
+          9,643   0.14%          1           9,643 weigh
+
+
+--- stderr
+
+--- exit 0 wall 0.154s
