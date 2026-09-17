@@ -1,0 +1,437 @@
+2026-09-17T21:46:46+09:00
+
+[38;2;10;191;131m   ZisK zkVM 1.2.0-alpha[0m
+      System Ubuntu 7.0.0-31-generic (Linux (Ubuntu 26.04))
+    Hostname parupunte-system
+     Command EMBEDDED Prove
+         Elf build/zisk/weigh-guest.elf
+       Input build/zisk/inputs/no-updates.bin
+
+2026-09-17T12:46:48.911008Z proofman_common::proof_ctx INFO: Creating proof context
+2026-09-17T12:46:48.911127Z proofman_common::global_info DEBUG: ··· Loading GlobalInfo JSON zisk/provingKey
+2026-09-17T12:46:48.911276Z proofman_common::proof_ctx INFO: Using hash function: Poseidon1
+2026-09-17T12:46:48.921130Z proofman::proofman INFO: >>> INITIALIZING_PROOFMAN
+2026-09-17T12:46:50.373902Z proofman_common::setup_ctx DEBUG: Recursive buffer requirement: compressor 5.58 GB, recursive1 1016.10 MB, recursive2 1016.10 MB, vadcop_final 992.10 MB, vadcop_final_compressed 540.10 MB
+2026-09-17T12:46:50.373962Z proofman_common::proof_ctx INFO: Max prover buffer size: 18.82 GB
+2026-09-17T12:46:50.373965Z proofman_common::proof_ctx INFO: Max prover recursive buffer size: 5.58 GB
+2026-09-17T12:46:50.373967Z proofman_common::proof_ctx INFO: Max prover recursive1/recursive2 buffer size: 1016.10 MB
+2026-09-17T12:46:50.374048Z proofman::utils DEBUG: Const tree regeneration needed for [0:0]
+2026-09-17T12:46:50.374053Z proofman::utils DEBUG: Const tree regeneration needed for [0:1]
+2026-09-17T12:46:50.374057Z proofman::utils DEBUG: Const tree regeneration needed for [0:2]
+2026-09-17T12:46:50.374061Z proofman::utils DEBUG: Const tree regeneration needed for [0:3]
+2026-09-17T12:46:50.374067Z proofman::utils DEBUG: Const tree regeneration needed for [0:4]
+2026-09-17T12:46:50.374070Z proofman::utils DEBUG: Const tree regeneration needed for [0:5]
+2026-09-17T12:46:50.374074Z proofman::utils DEBUG: Const tree regeneration needed for [0:6]
+2026-09-17T12:46:50.374078Z proofman::utils DEBUG: Const tree regeneration needed for [0:7]
+2026-09-17T12:46:50.374081Z proofman::utils DEBUG: Const tree regeneration needed for [0:8]
+2026-09-17T12:46:50.374085Z proofman::utils DEBUG: Const tree regeneration needed for [0:9]
+2026-09-17T12:46:50.374088Z proofman::utils DEBUG: Const tree regeneration needed for [0:10]
+2026-09-17T12:46:50.374092Z proofman::utils DEBUG: Const tree regeneration needed for [0:11]
+2026-09-17T12:46:50.374095Z proofman::utils DEBUG: Const tree regeneration needed for [0:12]
+2026-09-17T12:46:50.374099Z proofman::utils DEBUG: Const tree regeneration needed for [0:13]
+2026-09-17T12:46:50.374102Z proofman::utils DEBUG: Const tree regeneration needed for [0:14]
+2026-09-17T12:46:50.374106Z proofman::utils DEBUG: Const tree regeneration needed for [0:15]
+2026-09-17T12:46:50.374109Z proofman::utils DEBUG: Const tree regeneration needed for [0:16]
+2026-09-17T12:46:50.374113Z proofman::utils DEBUG: Const tree regeneration needed for [0:17]
+2026-09-17T12:46:50.374117Z proofman::utils DEBUG: Const tree regeneration needed for [0:18]
+2026-09-17T12:46:50.374120Z proofman::utils DEBUG: Const tree regeneration needed for [0:19]
+2026-09-17T12:46:50.374123Z proofman::utils DEBUG: Const tree regeneration needed for [0:20]
+2026-09-17T12:46:50.374127Z proofman::utils DEBUG: Const tree regeneration needed for [0:21]
+2026-09-17T12:46:50.374130Z proofman::utils DEBUG: Const tree regeneration needed for [0:22]
+2026-09-17T12:46:50.374134Z proofman::utils DEBUG: Const tree regeneration needed for [0:23]
+2026-09-17T12:46:50.374137Z proofman::utils DEBUG: Const tree regeneration needed for [0:24]
+2026-09-17T12:46:50.374140Z proofman::utils DEBUG: Const tree regeneration needed for [0:25]
+2026-09-17T12:46:50.374144Z proofman::utils DEBUG: Const tree regeneration needed for [0:26]
+2026-09-17T12:46:50.374148Z proofman::utils DEBUG: Const tree regeneration needed for [0:27]
+2026-09-17T12:46:50.374151Z proofman::utils DEBUG: Const tree regeneration needed for [0:28]
+2026-09-17T12:46:50.374155Z proofman::utils DEBUG: Const tree regeneration needed for [0:29]
+2026-09-17T12:46:50.374158Z proofman::utils DEBUG: Const tree regeneration needed for [0:30]
+2026-09-17T12:46:50.374162Z proofman::utils DEBUG: Const tree regeneration needed for [0:31]
+2026-09-17T12:46:50.374172Z proofman::utils DEBUG: Const tree regeneration needed for [0:32]
+2026-09-17T12:46:50.374175Z proofman::utils DEBUG: Const tree regeneration needed for [0:33]
+2026-09-17T12:46:50.374178Z proofman::utils DEBUG: Const tree regeneration needed for [0:34]
+2026-09-17T12:46:50.374181Z proofman::utils DEBUG: Const tree regeneration needed for [0:35]
+2026-09-17T12:46:50.374184Z proofman::utils DEBUG: Const tree regeneration needed for [0:36]
+2026-09-17T12:46:50.374187Z proofman::utils DEBUG: Const tree regeneration needed for [0:37]
+2026-09-17T12:46:50.374191Z proofman::utils DEBUG: Const tree regeneration needed for [0:38]
+2026-09-17T12:46:50.374194Z proofman::utils DEBUG: Const tree regeneration needed for [0:39]
+2026-09-17T12:46:50.374197Z proofman::utils DEBUG: Const tree regeneration needed for [0:40]
+2026-09-17T12:46:50.374200Z proofman::utils DEBUG: Const tree regeneration needed for [0:41]
+2026-09-17T12:46:50.374204Z proofman::proofman INFO: Regenerating constant trees (one-time setup)...
+2026-09-17T12:46:50.374208Z proofman::proofman INFO: >>> REGENERATING_CONST_TREE
+2026-09-17T12:47:29.631466Z proofman::proofman INFO: <<< REGENERATING_CONST_TREE (39257ms)
+2026-09-17T12:47:29.631507Z proofman::utils DEBUG: Vadcop compressor tree regeneration needed for [0:16]
+2026-09-17T12:47:29.631515Z proofman::utils DEBUG: Vadcop compressor tree regeneration needed for [0:17]
+2026-09-17T12:47:29.631520Z proofman::utils DEBUG: Vadcop compressor tree regeneration needed for [0:18]
+2026-09-17T12:47:29.631525Z proofman::utils DEBUG: Vadcop compressor tree regeneration needed for [0:19]
+2026-09-17T12:47:29.631530Z proofman::utils DEBUG: Vadcop compressor tree regeneration needed for [0:20]
+2026-09-17T12:47:29.631535Z proofman::utils DEBUG: Vadcop compressor tree regeneration needed for [0:21]
+2026-09-17T12:47:29.631541Z proofman::utils DEBUG: Vadcop compressor tree regeneration needed for [0:22]
+2026-09-17T12:47:29.631546Z proofman::utils DEBUG: Vadcop compressor tree regeneration needed for [0:23]
+2026-09-17T12:47:29.631551Z proofman::utils DEBUG: Vadcop compressor tree regeneration needed for [0:24]
+2026-09-17T12:47:29.631556Z proofman::utils DEBUG: Vadcop compressor tree regeneration needed for [0:25]
+2026-09-17T12:47:29.631561Z proofman::utils DEBUG: Vadcop compressor tree regeneration needed for [0:26]
+2026-09-17T12:47:29.631567Z proofman::utils DEBUG: Vadcop recursive1 tree regeneration needed for [0:0]
+2026-09-17T12:47:29.631571Z proofman::utils DEBUG: Vadcop recursive1 tree regeneration needed for [0:1]
+2026-09-17T12:47:29.631576Z proofman::utils DEBUG: Vadcop recursive1 tree regeneration needed for [0:2]
+2026-09-17T12:47:29.631581Z proofman::utils DEBUG: Vadcop recursive1 tree regeneration needed for [0:3]
+2026-09-17T12:47:29.631586Z proofman::utils DEBUG: Vadcop recursive1 tree regeneration needed for [0:4]
+2026-09-17T12:47:29.631591Z proofman::utils DEBUG: Vadcop recursive1 tree regeneration needed for [0:5]
+2026-09-17T12:47:29.631596Z proofman::utils DEBUG: Vadcop recursive1 tree regeneration needed for [0:6]
+2026-09-17T12:47:29.631602Z proofman::utils DEBUG: Vadcop recursive1 tree regeneration needed for [0:7]
+2026-09-17T12:47:29.631607Z proofman::utils DEBUG: Vadcop recursive1 tree regeneration needed for [0:8]
+2026-09-17T12:47:29.631611Z proofman::utils DEBUG: Vadcop recursive1 tree regeneration needed for [0:9]
+2026-09-17T12:47:29.631616Z proofman::utils DEBUG: Vadcop recursive1 tree regeneration needed for [0:10]
+2026-09-17T12:47:29.631620Z proofman::utils DEBUG: Vadcop recursive1 tree regeneration needed for [0:11]
+2026-09-17T12:47:29.631627Z proofman::utils DEBUG: Vadcop recursive1 tree regeneration needed for [0:12]
+2026-09-17T12:47:29.631631Z proofman::utils DEBUG: Vadcop recursive1 tree regeneration needed for [0:13]
+2026-09-17T12:47:29.631635Z proofman::utils DEBUG: Vadcop recursive1 tree regeneration needed for [0:14]
+2026-09-17T12:47:29.631638Z proofman::utils DEBUG: Vadcop recursive1 tree regeneration needed for [0:15]
+2026-09-17T12:47:29.631641Z proofman::utils DEBUG: Vadcop recursive1 tree regeneration needed for [0:16]
+2026-09-17T12:47:29.631649Z proofman::utils DEBUG: Vadcop recursive1 tree regeneration needed for [0:17]
+2026-09-17T12:47:29.631652Z proofman::utils DEBUG: Vadcop recursive1 tree regeneration needed for [0:18]
+2026-09-17T12:47:29.631655Z proofman::utils DEBUG: Vadcop recursive1 tree regeneration needed for [0:19]
+2026-09-17T12:47:29.631657Z proofman::utils DEBUG: Vadcop recursive1 tree regeneration needed for [0:20]
+2026-09-17T12:47:29.631660Z proofman::utils DEBUG: Vadcop recursive1 tree regeneration needed for [0:21]
+2026-09-17T12:47:29.631663Z proofman::utils DEBUG: Vadcop recursive1 tree regeneration needed for [0:22]
+2026-09-17T12:47:29.631666Z proofman::utils DEBUG: Vadcop recursive1 tree regeneration needed for [0:23]
+2026-09-17T12:47:29.631669Z proofman::utils DEBUG: Vadcop recursive1 tree regeneration needed for [0:24]
+2026-09-17T12:47:29.631671Z proofman::utils DEBUG: Vadcop recursive1 tree regeneration needed for [0:25]
+2026-09-17T12:47:29.631674Z proofman::utils DEBUG: Vadcop recursive1 tree regeneration needed for [0:26]
+2026-09-17T12:47:29.631677Z proofman::utils DEBUG: Vadcop recursive1 tree regeneration needed for [0:27]
+2026-09-17T12:47:29.631680Z proofman::utils DEBUG: Vadcop recursive1 tree regeneration needed for [0:28]
+2026-09-17T12:47:29.631683Z proofman::utils DEBUG: Vadcop recursive1 tree regeneration needed for [0:29]
+2026-09-17T12:47:29.631687Z proofman::utils DEBUG: Vadcop recursive1 tree regeneration needed for [0:30]
+2026-09-17T12:47:29.631691Z proofman::utils DEBUG: Vadcop recursive1 tree regeneration needed for [0:31]
+2026-09-17T12:47:29.631695Z proofman::utils DEBUG: Vadcop recursive1 tree regeneration needed for [0:32]
+2026-09-17T12:47:29.631699Z proofman::utils DEBUG: Vadcop recursive1 tree regeneration needed for [0:33]
+2026-09-17T12:47:29.631703Z proofman::utils DEBUG: Vadcop recursive1 tree regeneration needed for [0:34]
+2026-09-17T12:47:29.631709Z proofman::utils DEBUG: Vadcop recursive1 tree regeneration needed for [0:35]
+2026-09-17T12:47:29.631713Z proofman::utils DEBUG: Vadcop recursive1 tree regeneration needed for [0:36]
+2026-09-17T12:47:29.631717Z proofman::utils DEBUG: Vadcop recursive1 tree regeneration needed for [0:37]
+2026-09-17T12:47:29.631720Z proofman::utils DEBUG: Vadcop recursive1 tree regeneration needed for [0:38]
+2026-09-17T12:47:29.631724Z proofman::utils DEBUG: Vadcop recursive1 tree regeneration needed for [0:39]
+2026-09-17T12:47:29.631728Z proofman::utils DEBUG: Vadcop recursive1 tree regeneration needed for [0:40]
+2026-09-17T12:47:29.631733Z proofman::utils DEBUG: Vadcop recursive1 tree regeneration needed for [0:41]
+2026-09-17T12:47:29.631738Z proofman::utils DEBUG: Vadcop recursive2 tree regeneration needed for airgroup 0
+2026-09-17T12:47:29.631742Z proofman::utils DEBUG: Vadcop final tree regeneration needed
+2026-09-17T12:47:29.631746Z proofman::utils DEBUG: Vadcop final compressed tree regeneration needed
+2026-09-17T12:47:29.631748Z proofman::proofman INFO: Regenerating Vadcop constant trees (one-time setup)...
+2026-09-17T12:47:29.631750Z proofman::proofman INFO: >>> REGENERATING_VADCOP_CONST_TREE
+2026-09-17T12:48:15.266373Z proofman::proofman INFO: <<< REGENERATING_VADCOP_CONST_TREE (45634ms)
+2026-09-17T12:48:15.266491Z proofman::proofman INFO: >>> LOADING_FIXED_POLS
+2026-09-17T12:48:15.266514Z proofman::proofman INFO: <<< LOADING_FIXED_POLS (0ms)
+2026-09-17T12:48:15.266518Z proofman::proofman INFO: <<< INITIALIZING_PROOFMAN (86345ms)
+2026-09-17T12:48:15.266522Z proofman::proofman INFO: >>> INIT_PROOFMAN
+2026-09-17T12:48:15.266545Z proofman::proofman INFO: <<< INIT_PROOFMAN (0ms)
+2026-09-17T12:48:15.812034Z proofman_common::memory_handler INFO: MemoryHandler::Total memory for basic traces: 3.76 GB
+2026-09-17T12:48:15.903384Z proofman_common::memory_handler INFO: MemoryHandlerRecursive::Total memory for recursive traces: 658.77 MB
+2026-09-17T12:48:19.132574Z proofman_common::utils INFO: Node has 16 cores
+2026-09-17T12:48:19.135095Z proofman_common::utils INFO: Using 16 threads based on physical cores per process, considering there are 1 processes per node
+2026-09-17T12:48:19.135519Z proofman::proofman INFO: Using 2 threads per witness computation
+2026-09-17T12:48:19.260651Z zisk_sm_rom::custom_rom INFO: Computing custom trace ROM
+2026-09-17T12:48:21.150910Z zisk_rom_setup::rom_merkle INFO: Root hash: [16382429945980990698, 7050316538776384223, 14352902666369579017, 13383880145632609750]
+2026-09-17T12:48:21.152224Z proofman_common::proof_ctx INFO: Initializing publics custom_commits
+2026-09-17T12:48:21.202672Z proofman::proofman INFO: >>> EXECUTE
+2026-09-17T12:48:21.221043Z zisk_executor::executor INFO: >>> COMPUTE_MINIMAL_TRACE
+2026-09-17T12:48:21.223635Z zisk_executor::execution::rust INFO: >>> COUNT
+2026-09-17T12:48:21.225872Z zisk_executor::execution::rust INFO: <<< COUNT (2ms)
+2026-09-17T12:48:21.225906Z zisk_executor::executor INFO: <<< COMPUTE_MINIMAL_TRACE (4ms)
+2026-09-17T12:48:21.225913Z zisk_executor::plan INFO: >>> PLAN_MAIN
+2026-09-17T12:48:21.225978Z zisk_executor::plan INFO: <<< PLAN_MAIN (0ms)
+2026-09-17T12:48:21.226035Z zisk_executor::plan INFO: >>> PLAN_SECONDARY
+2026-09-17T12:48:21.227990Z zisk_sm_binary::binary_planner DEBUG: ··· Binary instances: add_hi=0 add=0 basic=1 ext=1 ext_full=0
+2026-09-17T12:48:21.228326Z zisk_executor::plan INFO: <<< PLAN_SECONDARY (2ms)
+2026-09-17T12:48:21.228330Z zisk_executor::plan INFO: >>> WAIT_PLAN_MEM_CPP
+2026-09-17T12:48:21.228395Z zisk_executor::plan INFO: <<< WAIT_PLAN_MEM_CPP (0ms)
+2026-09-17T12:48:21.228398Z zisk_executor::executor INFO: >>> WAIT_ASM_RH
+2026-09-17T12:48:21.228400Z zisk_executor::executor INFO: <<< WAIT_ASM_RH (0ms)
+2026-09-17T12:48:21.229595Z proofman::utils INFO: --- TOTAL PROOF INSTANCES SUMMARY ------------------------
+2026-09-17T12:48:21.229833Z proofman::utils INFO:     ► 10 Air instances found:
+2026-09-17T12:48:21.229837Z proofman::utils INFO:       Air Group [Zisk]
+2026-09-17T12:48:21.229840Z proofman::utils INFO:       · 1 x Air [Binary] (60 x 2^22)
+2026-09-17T12:48:21.229842Z proofman::utils INFO:       · 1 x Air [BinaryExtension] (52 x 2^22)
+2026-09-17T12:48:21.229844Z proofman::utils INFO:       · 1 x Air [InputData] (29 x 2^21)
+2026-09-17T12:48:21.229845Z proofman::utils INFO:       · 1 x Air [Main] (68 x 2^22)
+2026-09-17T12:48:21.229846Z proofman::utils INFO:       · 1 x Air [Mem] (28 x 2^22)
+2026-09-17T12:48:21.229848Z proofman::utils INFO:       · 1 x Air [MemAlign] (50 x 2^21)
+2026-09-17T12:48:21.229849Z proofman::utils INFO:       · 1 x Air [Rom] (28 x 2^22)
+2026-09-17T12:48:21.229850Z proofman::utils INFO:       · 1 x Air [RomData] (14 x 2^21)
+2026-09-17T12:48:21.229851Z proofman::utils INFO:       · 1 x Air [VirtualTableZisk0] (39 x 2^21)
+2026-09-17T12:48:21.229852Z proofman::utils INFO:       · 1 x Air [VirtualTableZisk1] (60 x 2^21)
+2026-09-17T12:48:21.229854Z proofman::utils INFO: --- TOTAL PROVER MEMORY USAGE ----------------------------
+2026-09-17T12:48:21.229858Z proofman::utils INFO:       · Binary: 6.43 GB per each of 1 instance | Witness : 1.22 GB
+2026-09-17T12:48:21.229862Z proofman::utils INFO:       · BinaryExtension: 5.23 GB per each of 1 instance | Witness : 896.00 MB
+2026-09-17T12:48:21.229864Z proofman::utils INFO:       · InputData: 1.72 GB per each of 1 instance | Witness : 144.00 MB
+2026-09-17T12:48:21.229866Z proofman::utils INFO:       · Main: 6.79 GB per each of 1 instance | Witness : 1.19 GB
+2026-09-17T12:48:21.229868Z proofman::utils INFO:       · Mem: 3.39 GB per each of 1 instance | Witness : 416.00 MB
+2026-09-17T12:48:21.229869Z proofman::utils INFO:       · MemAlign: 2.67 GB per each of 1 instance | Witness : 512.00 MB
+2026-09-17T12:48:21.229871Z proofman::utils INFO:       · Rom: 2.64 GB per each of 1 instance | Witness : 32.00 MB
+2026-09-17T12:48:21.229872Z proofman::utils INFO:       · RomData: 1.26 GB per each of 1 instance | Witness : 80.00 MB
+2026-09-17T12:48:21.229874Z proofman::utils INFO:       · VirtualTableZisk0: 2.35 GB per each of 1 instance | Witness : 192.00 MB
+2026-09-17T12:48:21.229875Z proofman::utils INFO:       · VirtualTableZisk1: 3.57 GB per each of 1 instance | Witness : 336.00 MB
+2026-09-17T12:48:21.229882Z proofman::utils INFO:       Total memory required by proofman: 18.82 GB
+2026-09-17T12:48:21.229884Z proofman::utils INFO: ----------------------------------------------------------
+2026-09-17T12:48:21.229885Z proofman::utils INFO:       Extra memory tables (CPU): 528.00 MB
+2026-09-17T12:48:21.229886Z proofman::utils INFO: ----------------------------------------------------------
+2026-09-17T12:48:21.229893Z proofman::proofman INFO: <<< EXECUTE (27ms)
+2026-09-17T12:48:21.229946Z proofman::proofman DEBUG: Initializing publics custom_commits
+2026-09-17T12:48:21.229952Z proofman::proofman INFO: >>> CALCULATING_CONTRIBUTIONS
+2026-09-17T12:48:21.229954Z proofman::proofman DEBUG: >>> CALCULATING_INNER_CONTRIBUTIONS
+2026-09-17T12:48:21.229956Z proofman::proofman DEBUG: >>> PREPARING_CONTRIBUTIONS
+2026-09-17T12:48:21.229958Z proofman::proofman DEBUG: <<< PREPARING_CONTRIBUTIONS (0ms)
+2026-09-17T12:48:21.229960Z proofman::proofman DEBUG: >>> CALCULATING_WITNESS
+2026-09-17T12:48:21.230015Z proofman::proofman DEBUG: >>> GENERATING_WC_0 [0:1]
+2026-09-17T12:48:21.230041Z proofman::proofman DEBUG: >>> PREPARING_WC_0 [0:1]
+2026-09-17T12:48:21.231190Z proofman::proofman DEBUG: <<< PREPARING_WC_0 [0:1] (1ms)
+2026-09-17T12:48:21.231213Z proofman::proofman DEBUG: >>> COMPUTING_WC_0 [0:1]
+2026-09-17T12:48:21.231229Z zisk_sm_rom::rom_instance DEBUG: ··· Creating Rom instance [4194304 rows]
+2026-09-17T12:48:21.231274Z proofman::proofman DEBUG: <<< COMPUTING_WC_0 [0:1] (0ms)
+2026-09-17T12:48:21.231280Z proofman::proofman DEBUG: <<< GENERATING_WC_0 [0:1] (1ms)
+2026-09-17T12:48:21.231275Z proofman::proofman DEBUG: >>> GET_CONTRIBUTION_AIR_0 [0:1]
+2026-09-17T12:48:21.231450Z proofman::proofman DEBUG: >>> GENERATING_WC_1 [0:0]
+2026-09-17T12:48:21.231470Z proofman::proofman DEBUG: >>> PREPARING_WC_1 [0:0]
+2026-09-17T12:48:21.231494Z proofman::proofman DEBUG: <<< PREPARING_WC_1 [0:0] (0ms)
+2026-09-17T12:48:21.231499Z proofman::proofman DEBUG: >>> COMPUTING_WC_1 [0:0]
+2026-09-17T12:48:21.231571Z zisk_sm_main::main_sm DEBUG: ··· Creating Main segment #0 [74390 / 4194304 rows filled 1.77%]
+2026-09-17T12:48:21.315633Z proofman::proofman DEBUG: <<< COMPUTING_WC_1 [0:0] (84ms)
+2026-09-17T12:48:21.315704Z proofman::proofman DEBUG: <<< GENERATING_WC_1 [0:0] (84ms)
+2026-09-17T12:48:21.316138Z proofman::proofman DEBUG: >>> GENERATING_WC_6 [0:10]
+2026-09-17T12:48:21.316187Z proofman::proofman DEBUG: >>> PREPARING_WC_6 [0:10]
+2026-09-17T12:48:21.317534Z proofman::proofman DEBUG: <<< PREPARING_WC_6 [0:10] (1ms)
+2026-09-17T12:48:21.317552Z proofman::proofman DEBUG: >>> COMPUTING_WC_6 [0:10]
+2026-09-17T12:48:22.579044Z proofman::proofman DEBUG: <<< GET_CONTRIBUTION_AIR_0 [0:1] (1347ms)
+2026-09-17T12:48:22.579076Z proofman::proofman INFO: First GPU contribution queued
+2026-09-17T12:48:22.579082Z proofman::proofman DEBUG: >>> GET_CONTRIBUTION_AIR_1 [0:0]
+2026-09-17T12:48:27.287177Z proofman::proofman DEBUG: <<< GET_CONTRIBUTION_AIR_1 [0:0] (4708ms)
+2026-09-17T12:48:27.298514Z zisk_sm_binary::binary_basic DEBUG: ··· Creating Binary instance [40532 / 4194304 rows filled 0.97%]
+2026-09-17T12:48:27.342327Z proofman::proofman DEBUG: >>> GET_CONTRIBUTION_AIR_6 [0:10]
+2026-09-17T12:48:27.342331Z proofman::proofman DEBUG: <<< COMPUTING_WC_6 [0:10] (6024ms)
+2026-09-17T12:48:27.342410Z proofman::proofman DEBUG: <<< GENERATING_WC_6 [0:10] (6026ms)
+2026-09-17T12:48:27.343080Z proofman::proofman DEBUG: >>> GENERATING_WC_7 [0:13]
+2026-09-17T12:48:27.343105Z proofman::proofman DEBUG: >>> PREPARING_WC_7 [0:13]
+2026-09-17T12:48:27.343858Z proofman::proofman DEBUG: <<< PREPARING_WC_7 [0:13] (0ms)
+2026-09-17T12:48:27.343867Z proofman::proofman DEBUG: >>> COMPUTING_WC_7 [0:13]
+2026-09-17T12:48:32.070970Z proofman::proofman DEBUG: <<< GET_CONTRIBUTION_AIR_6 [0:10] (4728ms)
+2026-09-17T12:48:32.071383Z zisk_sm_binary::binary_extension DEBUG: ··· Creating Binary Extension instance [4 / 4194304 rows filled 0.00%]
+2026-09-17T12:48:32.100734Z proofman::proofman DEBUG: >>> GET_CONTRIBUTION_AIR_7 [0:13]
+2026-09-17T12:48:32.100746Z proofman::proofman DEBUG: <<< COMPUTING_WC_7 [0:13] (4756ms)
+2026-09-17T12:48:32.100805Z proofman::proofman DEBUG: <<< GENERATING_WC_7 [0:13] (4757ms)
+2026-09-17T12:48:32.101585Z proofman::proofman DEBUG: >>> GENERATING_WC_5 [0:5]
+2026-09-17T12:48:32.101637Z proofman::proofman DEBUG: >>> PREPARING_WC_5 [0:5]
+2026-09-17T12:48:32.102647Z proofman::proofman DEBUG: <<< PREPARING_WC_5 [0:5] (1ms)
+2026-09-17T12:48:32.102651Z proofman::proofman DEBUG: >>> COMPUTING_WC_5 [0:5]
+2026-09-17T12:48:35.677154Z proofman::proofman DEBUG: <<< GET_CONTRIBUTION_AIR_7 [0:13] (3576ms)
+2026-09-17T12:48:35.677562Z zisk_sm_mem::mem_align_sm DEBUG: ··· Creating Mem Align instance [65 / 2097152 rows filled 0.00%]
+2026-09-17T12:48:35.704680Z proofman::proofman DEBUG: >>> GET_CONTRIBUTION_AIR_5 [0:5]
+2026-09-17T12:48:35.704697Z proofman::proofman DEBUG: <<< COMPUTING_WC_5 [0:5] (3602ms)
+2026-09-17T12:48:35.704730Z proofman::proofman DEBUG: <<< GENERATING_WC_5 [0:5] (3603ms)
+2026-09-17T12:48:35.705440Z proofman::proofman DEBUG: >>> GENERATING_WC_2 [0:2]
+2026-09-17T12:48:35.705500Z proofman::proofman DEBUG: >>> PREPARING_WC_2 [0:2]
+2026-09-17T12:48:35.706486Z proofman::proofman DEBUG: <<< PREPARING_WC_2 [0:2] (0ms)
+2026-09-17T12:48:35.706491Z proofman::proofman DEBUG: >>> COMPUTING_WC_2 [0:2]
+2026-09-17T12:48:37.557467Z proofman::proofman DEBUG: <<< GET_CONTRIBUTION_AIR_5 [0:5] (1852ms)
+2026-09-17T12:48:37.593980Z proofman::proofman DEBUG: >>> GET_CONTRIBUTION_AIR_2 [0:2]
+2026-09-17T12:48:37.594010Z proofman::proofman DEBUG: <<< COMPUTING_WC_2 [0:2] (1887ms)
+2026-09-17T12:48:37.594040Z proofman::proofman DEBUG: <<< GENERATING_WC_2 [0:2] (1888ms)
+2026-09-17T12:48:37.595058Z proofman::proofman DEBUG: >>> GENERATING_WC_4 [0:3]
+2026-09-17T12:48:37.595095Z proofman::proofman DEBUG: >>> PREPARING_WC_4 [0:3]
+2026-09-17T12:48:37.595699Z proofman::proofman DEBUG: <<< PREPARING_WC_4 [0:3] (0ms)
+2026-09-17T12:48:37.595703Z proofman::proofman DEBUG: >>> COMPUTING_WC_4 [0:3]
+2026-09-17T12:48:39.968906Z proofman::proofman DEBUG: <<< GET_CONTRIBUTION_AIR_2 [0:2] (2374ms)
+2026-09-17T12:48:39.975295Z proofman::proofman DEBUG: >>> GET_CONTRIBUTION_AIR_4 [0:3]
+2026-09-17T12:48:39.975307Z proofman::proofman DEBUG: <<< COMPUTING_WC_4 [0:3] (2379ms)
+2026-09-17T12:48:39.975334Z proofman::proofman DEBUG: <<< GENERATING_WC_4 [0:3] (2380ms)
+2026-09-17T12:48:39.975961Z proofman::proofman DEBUG: >>> GENERATING_WC_3 [0:4]
+2026-09-17T12:48:39.975995Z proofman::proofman DEBUG: >>> PREPARING_WC_3 [0:4]
+2026-09-17T12:48:39.977068Z proofman::proofman DEBUG: <<< PREPARING_WC_3 [0:4] (1ms)
+2026-09-17T12:48:39.977080Z proofman::proofman DEBUG: >>> COMPUTING_WC_3 [0:4]
+2026-09-17T12:48:40.704936Z proofman::proofman DEBUG: <<< GET_CONTRIBUTION_AIR_4 [0:3] (729ms)
+2026-09-17T12:48:40.709414Z proofman::proofman DEBUG: >>> GET_CONTRIBUTION_AIR_3 [0:4]
+2026-09-17T12:48:40.709421Z proofman::proofman DEBUG: <<< COMPUTING_WC_3 [0:4] (732ms)
+2026-09-17T12:48:40.709453Z proofman::proofman DEBUG: <<< GENERATING_WC_3 [0:4] (733ms)
+2026-09-17T12:48:40.713035Z proofman::proofman DEBUG: <<< CALCULATING_WITNESS (19483ms)
+2026-09-17T12:48:40.713058Z proofman::proofman DEBUG: >>> CALCULATING_TABLES
+2026-09-17T12:48:40.745223Z proofman::proofman DEBUG: <<< CALCULATING_TABLES (32ms)
+2026-09-17T12:48:41.408648Z proofman::proofman DEBUG: <<< GET_CONTRIBUTION_AIR_3 [0:4] (699ms)
+2026-09-17T12:48:41.408684Z proofman::proofman DEBUG: >>> GET_CONTRIBUTION_AIR_8 [0:40]
+2026-09-17T12:48:42.289872Z proofman::proofman DEBUG: <<< GET_CONTRIBUTION_AIR_8 [0:40] (881ms)
+2026-09-17T12:48:42.289909Z proofman::proofman DEBUG: >>> GET_CONTRIBUTION_AIR_9 [0:41]
+2026-09-17T12:48:43.698134Z proofman::proofman DEBUG: <<< GET_CONTRIBUTION_AIR_9 [0:41] (1408ms)
+2026-09-17T12:48:43.699113Z proofman::proofman DEBUG: <<< CALCULATING_INNER_CONTRIBUTIONS (22469ms)
+2026-09-17T12:48:43.699142Z proofman::challenge_accumulation DEBUG: >>> CALCULATE_INTERNAL_CONTRIBUTION
+2026-09-17T12:48:43.701108Z proofman::challenge_accumulation DEBUG: <<< CALCULATE_INTERNAL_CONTRIBUTION (1ms)
+2026-09-17T12:48:43.701114Z proofman::proofman INFO: <<< CALCULATING_CONTRIBUTIONS (22471ms)
+2026-09-17T12:48:43.701135Z proofman::proofman DEBUG: Worker contribution received: worker_index=0, airgroup_id=0, challenge(first 10)=[3877135138723753941, 5178391536774604957, 18189908826367769710, 2199721068380403281, 14899802616463164055, 10795472318527710098, 6616740863120804436, 9580628091427537167, 3950073372738896072, 1197077924286937480]
+2026-09-17T12:48:43.701277Z proofman::proofman INFO: ··· Global challenge: [6335894679013675462, 2947025979279269152, 8222365381497447600]
+2026-09-17T12:48:43.701287Z proofman::proofman INFO: >>> GENERATING_PROOFS
+2026-09-17T12:48:43.701289Z proofman::proofman INFO: >>> GENERATING_INNER_PROOFS
+2026-09-17T12:48:43.701717Z proofman::proofman DEBUG: >>> CALCULATING_WITNESS
+2026-09-17T12:48:43.701762Z proofman::proofman DEBUG: >>> GEN_PROOF_9 [0:41]
+2026-09-17T12:48:43.701841Z proofman::proofman DEBUG: >>> GENERATING_WC_6 [0:10]
+2026-09-17T12:48:43.701871Z proofman::proofman DEBUG: >>> PREPARING_WC_6 [0:10]
+2026-09-17T12:48:43.704011Z proofman::proofman DEBUG: <<< PREPARING_WC_6 [0:10] (2ms)
+2026-09-17T12:48:43.704043Z proofman::proofman DEBUG: >>> COMPUTING_WC_6 [0:10]
+2026-09-17T12:48:49.310001Z proofman::proofman DEBUG: <<< GEN_PROOF_9 [0:41] (5608ms)
+2026-09-17T12:48:49.310027Z proofman::recursion DEBUG: >>> GENERATING_RECURSIVE1_WITNESS_9 [0:41]
+2026-09-17T12:48:49.310041Z proofman::proofman DEBUG: >>> GEN_PROOF_8 [0:40]
+2026-09-17T12:48:49.368595Z proofman::recursion DEBUG: <<< GENERATING_RECURSIVE1_WITNESS_9 [0:41] (58ms)
+2026-09-17T12:48:53.341309Z proofman::recursion DEBUG: >>> GENERATING_RECURSIVE1_WITNESS_8 [0:40]
+2026-09-17T12:48:53.341306Z proofman::proofman DEBUG: <<< GEN_PROOF_8 [0:40] (4031ms)
+2026-09-17T12:48:53.341358Z proofman::proofman DEBUG: >>> GEN_PROOF_3 [0:4]
+2026-09-17T12:48:55.839066Z proofman::proofman DEBUG: <<< GEN_PROOF_3 [0:4] (2497ms)
+2026-09-17T12:48:55.839114Z proofman::proofman DEBUG: >>> GEN_PROOF_0 [0:1]
+2026-09-17T12:48:55.839121Z zisk_sm_binary::binary_basic DEBUG: ··· Creating Binary instance [40532 / 4194304 rows filled 0.97%]
+2026-09-17T12:48:55.884076Z proofman::proofman DEBUG: <<< COMPUTING_WC_6 [0:10] (12180ms)
+2026-09-17T12:48:55.884170Z proofman::proofman DEBUG: <<< GENERATING_WC_6 [0:10] (12182ms)
+2026-09-17T12:48:55.885285Z proofman::proofman DEBUG: >>> GENERATING_WC_1 [0:0]
+2026-09-17T12:48:55.885339Z proofman::proofman DEBUG: >>> PREPARING_WC_1 [0:0]
+2026-09-17T12:48:55.885378Z proofman::proofman DEBUG: <<< PREPARING_WC_1 [0:0] (0ms)
+2026-09-17T12:48:55.885381Z proofman::proofman DEBUG: >>> COMPUTING_WC_1 [0:0]
+2026-09-17T12:49:01.229340Z proofman::proofman DEBUG: <<< GEN_PROOF_0 [0:1] (5390ms)
+2026-09-17T12:49:01.255214Z proofman::proofman DEBUG: >>> GEN_PROOF_6 [0:10]
+2026-09-17T12:49:11.636403Z proofman::proofman DEBUG: <<< GEN_PROOF_6 [0:10] (10381ms)
+2026-09-17T12:49:11.636460Z proofman::recursion DEBUG: >>> GEN_RECURSIVE_PROOF_Recursive1 [0:41]
+2026-09-17T12:49:11.636452Z zisk_sm_main::main_sm DEBUG: ··· Creating Main segment #0 [74390 / 4194304 rows filled 1.77%]
+2026-09-17T12:49:11.682248Z proofman::proofman DEBUG: <<< COMPUTING_WC_1 [0:0] (15796ms)
+2026-09-17T12:49:11.682298Z proofman::proofman DEBUG: <<< GENERATING_WC_1 [0:0] (15797ms)
+2026-09-17T12:49:11.682493Z proofman::proofman DEBUG: >>> GENERATING_WC_7 [0:13]
+2026-09-17T12:49:11.682505Z proofman::proofman DEBUG: >>> PREPARING_WC_7 [0:13]
+2026-09-17T12:49:11.683446Z proofman::proofman DEBUG: <<< PREPARING_WC_7 [0:13] (0ms)
+2026-09-17T12:49:11.683452Z proofman::proofman DEBUG: >>> COMPUTING_WC_7 [0:13]
+2026-09-17T12:49:11.751059Z proofman::recursion DEBUG: <<< GENERATING_RECURSIVE1_WITNESS_8 [0:40] (18409ms)
+2026-09-17T12:49:11.751165Z proofman::recursion DEBUG: >>> GENERATING_RECURSIVE1_WITNESS_3 [0:4]
+2026-09-17T12:49:13.349186Z proofman::recursion DEBUG: <<< GEN_RECURSIVE_PROOF_Recursive1 [0:41] (1712ms)
+2026-09-17T12:49:13.349230Z proofman::proofman DEBUG: >>> GEN_PROOF_1 [0:0]
+2026-09-17T12:49:26.186929Z proofman::proofman DEBUG: <<< GEN_PROOF_1 [0:0] (12837ms)
+2026-09-17T12:49:26.186974Z zisk_sm_binary::binary_extension DEBUG: ··· Creating Binary Extension instance [4 / 4194304 rows filled 0.00%]
+2026-09-17T12:49:26.186983Z proofman::recursion DEBUG: >>> GEN_RECURSIVE_PROOF_Recursive1 [0:40]
+2026-09-17T12:49:26.217747Z proofman::proofman DEBUG: <<< COMPUTING_WC_7 [0:13] (14534ms)
+2026-09-17T12:49:26.217789Z proofman::proofman DEBUG: <<< GENERATING_WC_7 [0:13] (14535ms)
+2026-09-17T12:49:26.218033Z proofman::proofman DEBUG: >>> GENERATING_WC_5 [0:5]
+2026-09-17T12:49:26.218070Z proofman::proofman DEBUG: >>> PREPARING_WC_5 [0:5]
+2026-09-17T12:49:26.218708Z proofman::proofman DEBUG: <<< PREPARING_WC_5 [0:5] (0ms)
+2026-09-17T12:49:26.219301Z proofman::proofman DEBUG: >>> COMPUTING_WC_5 [0:5]
+2026-09-17T12:49:26.285242Z proofman::recursion DEBUG: <<< GENERATING_RECURSIVE1_WITNESS_3 [0:4] (14534ms)
+2026-09-17T12:49:26.285699Z proofman::recursion DEBUG: >>> GENERATING_RECURSIVE1_WITNESS_0 [0:1]
+2026-09-17T12:49:27.915356Z proofman::recursion DEBUG: <<< GEN_RECURSIVE_PROOF_Recursive1 [0:40] (1728ms)
+2026-09-17T12:49:27.915400Z proofman::proofman DEBUG: >>> GEN_PROOF_7 [0:13]
+2026-09-17T12:49:36.960052Z proofman::proofman DEBUG: <<< GEN_PROOF_7 [0:13] (9044ms)
+2026-09-17T12:49:36.960106Z proofman::recursion DEBUG: >>> GEN_RECURSIVE_PROOF_Recursive1 [0:4]
+2026-09-17T12:49:36.960115Z zisk_sm_mem::mem_align_sm DEBUG: ··· Creating Mem Align instance [65 / 2097152 rows filled 0.00%]
+2026-09-17T12:49:36.977587Z proofman::proofman DEBUG: <<< COMPUTING_WC_5 [0:5] (10758ms)
+2026-09-17T12:49:36.977626Z proofman::proofman DEBUG: <<< GENERATING_WC_5 [0:5] (10759ms)
+2026-09-17T12:49:36.977842Z proofman::proofman DEBUG: >>> GENERATING_WC_2 [0:2]
+2026-09-17T12:49:36.977865Z proofman::proofman DEBUG: >>> PREPARING_WC_2 [0:2]
+2026-09-17T12:49:36.978871Z proofman::proofman DEBUG: <<< PREPARING_WC_2 [0:2] (1ms)
+2026-09-17T12:49:36.978876Z proofman::proofman DEBUG: >>> COMPUTING_WC_2 [0:2]
+2026-09-17T12:49:37.027830Z proofman::recursion DEBUG: <<< GENERATING_RECURSIVE1_WITNESS_0 [0:1] (10742ms)
+2026-09-17T12:49:37.027881Z proofman::recursion DEBUG: >>> GENERATING_RECURSIVE1_WITNESS_6 [0:10]
+2026-09-17T12:49:38.997932Z proofman::recursion DEBUG: <<< GEN_RECURSIVE_PROOF_Recursive1 [0:4] (2037ms)
+2026-09-17T12:49:38.997968Z proofman::proofman DEBUG: >>> GEN_PROOF_5 [0:5]
+2026-09-17T12:49:43.143646Z proofman::proofman DEBUG: <<< GEN_PROOF_5 [0:5] (4145ms)
+2026-09-17T12:49:43.143701Z proofman::recursion DEBUG: >>> GEN_RECURSIVE_PROOF_Recursive1 [0:1]
+2026-09-17T12:49:43.186967Z proofman::proofman DEBUG: <<< COMPUTING_WC_2 [0:2] (6208ms)
+2026-09-17T12:49:43.187007Z proofman::proofman DEBUG: <<< GENERATING_WC_2 [0:2] (6209ms)
+2026-09-17T12:49:43.187166Z proofman::proofman DEBUG: >>> GENERATING_WC_4 [0:3]
+2026-09-17T12:49:43.187207Z proofman::proofman DEBUG: >>> PREPARING_WC_4 [0:3]
+2026-09-17T12:49:43.188054Z proofman::proofman DEBUG: <<< PREPARING_WC_4 [0:3] (0ms)
+2026-09-17T12:49:43.188076Z proofman::proofman DEBUG: >>> COMPUTING_WC_4 [0:3]
+2026-09-17T12:49:43.216098Z proofman::recursion DEBUG: <<< GENERATING_RECURSIVE1_WITNESS_6 [0:10] (6188ms)
+2026-09-17T12:49:43.216149Z proofman::recursion DEBUG: >>> GENERATING_RECURSIVE1_WITNESS_1 [0:0]
+2026-09-17T12:49:45.020259Z proofman::recursion DEBUG: <<< GEN_RECURSIVE_PROOF_Recursive1 [0:1] (1876ms)
+2026-09-17T12:49:45.020302Z proofman::proofman DEBUG: >>> GEN_PROOF_2 [0:2]
+2026-09-17T12:49:51.489575Z proofman::proofman DEBUG: <<< GEN_PROOF_2 [0:2] (6469ms)
+2026-09-17T12:49:51.489629Z proofman::recursion DEBUG: >>> GEN_RECURSIVE_PROOF_Recursive1 [0:10]
+2026-09-17T12:49:51.496080Z proofman::proofman DEBUG: <<< COMPUTING_WC_4 [0:3] (8307ms)
+2026-09-17T12:49:51.496120Z proofman::proofman DEBUG: <<< GENERATING_WC_4 [0:3] (8308ms)
+2026-09-17T12:49:51.496203Z proofman::proofman DEBUG: <<< CALCULATING_WITNESS (67794ms)
+2026-09-17T12:49:51.543531Z proofman::recursion DEBUG: <<< GENERATING_RECURSIVE1_WITNESS_1 [0:0] (8327ms)
+2026-09-17T12:49:51.543602Z proofman::recursion DEBUG: >>> GENERATE_WITNESS_AGGREGATION
+2026-09-17T12:49:53.299253Z proofman::recursion DEBUG: <<< GEN_RECURSIVE_PROOF_Recursive1 [0:10] (1809ms)
+2026-09-17T12:49:53.299304Z proofman::proofman DEBUG: >>> GEN_PROOF_4 [0:3]
+2026-09-17T12:49:56.569241Z proofman::proofman DEBUG: <<< GEN_PROOF_4 [0:3] (3269ms)
+2026-09-17T12:49:56.569293Z proofman::recursion DEBUG: >>> GEN_RECURSIVE_PROOF_Recursive1 [0:0]
+2026-09-17T12:49:56.623188Z proofman::recursion DEBUG: <<< GENERATE_WITNESS_AGGREGATION (5079ms)
+2026-09-17T12:49:56.623281Z proofman::recursion DEBUG: >>> GENERATING_RECURSIVE1_WITNESS_7 [0:13]
+2026-09-17T12:49:58.465883Z proofman::recursion DEBUG: <<< GEN_RECURSIVE_PROOF_Recursive1 [0:0] (1896ms)
+2026-09-17T12:49:58.465929Z proofman::recursion DEBUG: >>> GEN_RECURSIVE_PROOF_Recursive2 [0:0]
+2026-09-17T12:49:58.581182Z proofman::recursion DEBUG: <<< GENERATING_RECURSIVE1_WITNESS_7 [0:13] (1957ms)
+2026-09-17T12:49:58.581415Z proofman::recursion DEBUG: >>> GENERATING_RECURSIVE1_WITNESS_5 [0:5]
+2026-09-17T12:50:00.251497Z proofman::recursion DEBUG: <<< GEN_RECURSIVE_PROOF_Recursive2 [0:0] (1785ms)
+2026-09-17T12:50:00.251545Z proofman::recursion DEBUG: >>> GEN_RECURSIVE_PROOF_Recursive1 [0:13]
+2026-09-17T12:50:00.298571Z proofman::recursion DEBUG: <<< GENERATING_RECURSIVE1_WITNESS_5 [0:5] (1717ms)
+2026-09-17T12:50:00.298628Z proofman::recursion DEBUG: >>> GENERATING_RECURSIVE1_WITNESS_2 [0:2]
+2026-09-17T12:50:02.011151Z proofman::recursion DEBUG: <<< GEN_RECURSIVE_PROOF_Recursive1 [0:13] (1759ms)
+2026-09-17T12:50:02.011207Z proofman::recursion DEBUG: >>> GEN_RECURSIVE_PROOF_Recursive1 [0:5]
+2026-09-17T12:50:02.059984Z proofman::recursion DEBUG: <<< GENERATING_RECURSIVE1_WITNESS_2 [0:2] (1761ms)
+2026-09-17T12:50:02.060036Z proofman::recursion DEBUG: >>> GENERATE_WITNESS_AGGREGATION
+2026-09-17T12:50:03.818098Z proofman::recursion DEBUG: <<< GEN_RECURSIVE_PROOF_Recursive1 [0:5] (1806ms)
+2026-09-17T12:50:03.818150Z proofman::recursion DEBUG: >>> GEN_RECURSIVE_PROOF_Recursive1 [0:2]
+2026-09-17T12:50:03.854948Z proofman::recursion DEBUG: <<< GENERATE_WITNESS_AGGREGATION (1794ms)
+2026-09-17T12:50:03.855005Z proofman::recursion DEBUG: >>> GENERATING_RECURSIVE1_WITNESS_4 [0:3]
+2026-09-17T12:50:05.605506Z proofman::recursion DEBUG: <<< GEN_RECURSIVE_PROOF_Recursive1 [0:2] (1787ms)
+2026-09-17T12:50:05.605560Z proofman::recursion DEBUG: >>> GEN_RECURSIVE_PROOF_Recursive2 [0:0]
+2026-09-17T12:50:05.654911Z proofman::recursion DEBUG: <<< GENERATING_RECURSIVE1_WITNESS_4 [0:3] (1799ms)
+2026-09-17T12:50:07.333393Z proofman::recursion DEBUG: <<< GEN_RECURSIVE_PROOF_Recursive2 [0:0] (1727ms)
+2026-09-17T12:50:07.333439Z proofman::recursion DEBUG: >>> GENERATE_WITNESS_AGGREGATION
+2026-09-17T12:50:07.333446Z proofman::recursion DEBUG: >>> GEN_RECURSIVE_PROOF_Recursive1 [0:3]
+2026-09-17T12:50:07.370807Z proofman::recursion DEBUG: <<< GENERATE_WITNESS_AGGREGATION (37ms)
+2026-09-17T12:50:07.370878Z proofman::recursion DEBUG: >>> GENERATE_WITNESS_AGGREGATION
+2026-09-17T12:50:09.069425Z proofman::recursion DEBUG: <<< GEN_RECURSIVE_PROOF_Recursive1 [0:3] (1735ms)
+2026-09-17T12:50:09.069476Z proofman::recursion DEBUG: >>> GEN_RECURSIVE_PROOF_Recursive2 [0:0]
+2026-09-17T12:50:09.135486Z proofman::recursion DEBUG: <<< GENERATE_WITNESS_AGGREGATION (1764ms)
+2026-09-17T12:50:10.771034Z proofman::recursion DEBUG: <<< GEN_RECURSIVE_PROOF_Recursive2 [0:0] (1701ms)
+2026-09-17T12:50:10.771141Z proofman::recursion DEBUG: >>> GEN_RECURSIVE_PROOF_Recursive2 [0:0]
+2026-09-17T12:50:12.439957Z proofman::recursion DEBUG: <<< GEN_RECURSIVE_PROOF_Recursive2 [0:0] (1668ms)
+2026-09-17T12:50:12.440011Z proofman::recursion DEBUG: >>> GENERATE_WITNESS_AGGREGATION
+2026-09-17T12:50:12.460772Z proofman::recursion DEBUG: <<< GENERATE_WITNESS_AGGREGATION (20ms)
+2026-09-17T12:50:12.460835Z proofman::recursion DEBUG: >>> GEN_RECURSIVE_PROOF_Recursive2 [0:0]
+2026-09-17T12:50:14.137895Z proofman::recursion DEBUG: <<< GEN_RECURSIVE_PROOF_Recursive2 [0:0] (1677ms)
+2026-09-17T12:50:14.139432Z proofman::proofman INFO: <<< GENERATING_INNER_PROOFS (90438ms)
+2026-09-17T12:50:14.141990Z proofman::proofman DEBUG: >>> GET_OUTER_RANK
+2026-09-17T12:50:14.141996Z proofman::proofman DEBUG: <<< GET_OUTER_RANK (2ms)
+2026-09-17T12:50:14.141999Z proofman::proofman DEBUG: >>> GENERATING_WORKER_RMA_COMPRESSED_PROOFS
+2026-09-17T12:50:14.142137Z proofman::proofman DEBUG: <<< GENERATING_WORKER_RMA_COMPRESSED_PROOFS (0ms)
+2026-09-17T12:50:14.142354Z proofman::recursion INFO: >>> GENERATE_VADCOP_FINAL_PROOF
+2026-09-17T12:50:14.142467Z proofman::recursion DEBUG: >>> GENERATE_VADCOP_FINAL_PROOF_WITNESS
+2026-09-17T12:50:14.156414Z proofman::recursion DEBUG: <<< GENERATE_VADCOP_FINAL_PROOF_WITNESS (13ms)
+2026-09-17T12:50:14.156455Z proofman::recursion DEBUG: >>> GEN_RECURSIVE_PROOF_VadcopFinal [0:0]
+2026-09-17T12:50:16.310011Z proofman::recursion DEBUG: <<< GEN_RECURSIVE_PROOF_VadcopFinal [0:0] (2153ms)
+2026-09-17T12:50:16.310047Z proofman::recursion INFO: <<< GENERATE_VADCOP_FINAL_PROOF (2167ms)
+2026-09-17T12:50:16.310336Z proofman_common::global_info DEBUG: ··· Loading GlobalInfo JSON zisk/provingKey
+2026-09-17T12:50:16.349891Z proofman_verifier::verifier DEBUG: Verifying proof
+2026-09-17T12:50:16.351656Z proofman_verifier::verifier DEBUG: Verifying Quotient polynomial
+2026-09-17T12:50:16.351948Z proofman_verifier::verifier DEBUG: Quotient polynomial verification passed
+2026-09-17T12:50:16.351953Z proofman_verifier::verifier DEBUG: Verifying final polynomial
+2026-09-17T12:50:16.351956Z proofman_verifier::verifier DEBUG: Final polynomial verification passed
+2026-09-17T12:50:16.351957Z proofman_verifier::verifier DEBUG: Proof verification succeeded
+2026-09-17T12:50:16.352098Z cargo_zisk::commands::user::embedded::prove INFO: Proof verified successfully.
+2026-09-17T12:50:16.352165Z cargo_zisk::commands::user::embedded::prove INFO: --- PROVE SUMMARY -------------
+2026-09-17T12:50:16.352167Z cargo_zisk::commands::user::embedded::prove INFO: Proof generated in 115.158s, steps: 74390
+2026-09-17T12:50:16.352171Z cargo_zisk::commands::user::embedded::prove INFO: Proof saved to smoke/no-updates.cpu.proof
+	Command being timed: "./zisk/bin/cargo-zisk-cpu prove -e build/zisk/weigh-guest.elf -i build/zisk/inputs/no-updates.bin -k zisk/provingKey -y -o smoke/no-updates.cpu.proof -v"
+	User time (seconds): 5545.48
+	System time (seconds): 93.60
+	Percent of CPU this job got: 2679%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 3:30.43
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 36545784
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 1406
+	Minor (reclaiming a frame) page faults: 30835433
+	Voluntary context switches: 437765
+	Involuntary context switches: 644724
+	Swaps: 0
+	File system inputs: 43585288
+	File system outputs: 79499168
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+rc=0
+2026-09-17T21:50:17+09:00

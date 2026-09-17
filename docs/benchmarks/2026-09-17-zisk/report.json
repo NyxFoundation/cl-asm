@@ -1,0 +1,154 @@
+{
+  "timestamp": "2026-09-17T12:57:00.310077+00:00",
+  "environment": {
+    "hostname": "parupunte-system",
+    "platform": "Linux-7.0.0-31-generic-x86_64-with-glibc2.43",
+    "cpu": "AMD Ryzen 9 9950X 16-Core Processor",
+    "gpu": "NVIDIA GeForce RTX 5090, 595.84, 32607 MiB",
+    "zisk": "cargo-zisk 1.2.0-alpha [gpu] (fbbc69b 2026-08-26T22:08:47.119021875Z)",
+    "hwlocComponents": "-gl",
+    "guestElfSha256": "d19f73b8550555f06f0209bceb32870fd6b717e1df5f6fedd733c2dc2eba925e",
+    "embeddedWeighSha256": "a147a194ae9bc3c0fc1d938164569cf14b43d1f187ee30be26a41062ce3c9cb8"
+  },
+  "method": "ziskemu -X -S symbol steps and cost model; ziskemu -c public outputs compared with the official reference; cargo-zisk prove wall time per fresh process including proving-key loading; cargo-zisk verify wall time",
+  "measurements": {
+    "no-updates": {
+      "emulation": {
+        "steps": 74390,
+        "stepsByFunction": {
+          "guest_main": 74205,
+          "weigh": 99
+        },
+        "costByFunction": {
+          "guest_main": 7079842,
+          "weigh": 7507
+        },
+        "cost": {
+          "MAIN": 5058520,
+          "OPCODES": 1428629,
+          "PRECOMPILES": 0,
+          "MEMORY": 606560,
+          "VARIABLE": 7093709,
+          "BASE": 287309824,
+          "TOTAL": 294403533
+        }
+      },
+      "publicOutputsMatchReference": true
+    },
+    "previous-only": {
+      "emulation": {
+        "steps": 74415,
+        "stepsByFunction": {
+          "guest_main": 74230,
+          "weigh": 112
+        },
+        "costByFunction": {
+          "guest_main": 7082199,
+          "weigh": 8575
+        },
+        "cost": {
+          "MAIN": 5060220,
+          "OPCODES": 1429132,
+          "PRECOMPILES": 0,
+          "MEMORY": 606714,
+          "VARIABLE": 7096066,
+          "BASE": 287309824,
+          "TOTAL": 294405890
+        }
+      },
+      "publicOutputsMatchReference": true
+    },
+    "current-only": {
+      "emulation": {
+        "steps": 74408,
+        "stepsByFunction": {
+          "guest_main": 74223,
+          "weigh": 112
+        },
+        "costByFunction": {
+          "guest_main": 7081503,
+          "weigh": 8575
+        },
+        "cost": {
+          "MAIN": 5059744,
+          "OPCODES": 1428912,
+          "PRECOMPILES": 0,
+          "MEMORY": 606714,
+          "VARIABLE": 7095370,
+          "BASE": 287309824,
+          "TOTAL": 294405194
+        }
+      },
+      "publicOutputsMatchReference": true
+    },
+    "both-justified": {
+      "emulation": {
+        "steps": 74433,
+        "stepsByFunction": {
+          "guest_main": 74248,
+          "weigh": 125
+        },
+        "costByFunction": {
+          "guest_main": 7083692,
+          "weigh": 9643
+        },
+        "cost": {
+          "MAIN": 5061444,
+          "OPCODES": 1429247,
+          "PRECOMPILES": 0,
+          "MEMORY": 606868,
+          "VARIABLE": 7097559,
+          "BASE": 287309824,
+          "TOTAL": 294407383
+        }
+      },
+      "publicOutputsMatchReference": true
+    },
+    "two-finalizations": {
+      "emulation": {
+        "steps": 74455,
+        "stepsByFunction": {
+          "guest_main": 74270,
+          "weigh": 147
+        },
+        "costByFunction": {
+          "guest_main": 7085573,
+          "weigh": 11524
+        },
+        "cost": {
+          "MAIN": 5062940,
+          "OPCODES": 1429292,
+          "PRECOMPILES": 0,
+          "MEMORY": 607208,
+          "VARIABLE": 7099440,
+          "BASE": 287309824,
+          "TOTAL": 294409264
+        }
+      },
+      "publicOutputsMatchReference": true
+    },
+    "genesis-shared-root": {
+      "emulation": {
+        "steps": 74433,
+        "stepsByFunction": {
+          "guest_main": 74248,
+          "weigh": 125
+        },
+        "costByFunction": {
+          "guest_main": 7083692,
+          "weigh": 9643
+        },
+        "cost": {
+          "MAIN": 5061444,
+          "OPCODES": 1429247,
+          "PRECOMPILES": 0,
+          "MEMORY": 606868,
+          "VARIABLE": 7097559,
+          "BASE": 287309824,
+          "TOTAL": 294407383
+        }
+      },
+      "publicOutputsMatchReference": true
+    }
+  }
+}
