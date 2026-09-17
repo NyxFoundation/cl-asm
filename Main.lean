@@ -1,3 +1,4 @@
+import ClAsm.Probes
 import ClAsm.Codegen
 import ClAsm.Weigh.Program
 
