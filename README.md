@@ -1,7 +1,9 @@
 # CL ASM
 
 Lean proofs and RISC-V code for Ethereum consensus-layer operations.
-The v0 target is `weigh_justification_and_finalization`; see [DESIGN.md](DESIGN.md).
+The v0 target is `weigh_justification_and_finalization`; see [DESIGN.md](DESIGN.md)
+for the design and [the roadmap](docs/roadmap.md) for the purpose, the zkVM
+findings, and what remains to be proved.
 
 The complete `weigh` routine has 175 RV64 instructions (700 bytes). Its Lean
 contract proves the specified state transition, resource preservation, and
