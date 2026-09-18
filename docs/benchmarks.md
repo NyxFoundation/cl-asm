@@ -1,6 +1,6 @@
 ---
 title: Weigh Benchmark Results
-last_updated: 2026-09-17
+last_updated: 2026-09-18
 tags:
   - benchmark
   - consensus
@@ -39,7 +39,7 @@ Fixtures are `benchmark_cases()` in `tests/weigh_cases.py` at the recorded revis
 
 ## Method and reproduction
 
-Build the measured revision using the [README instructions](../README.md),
+Build the measured revision using the [build instructions](build.md),
 including the pinned Python environment and RISC-V binutils. Then run:
 
 ```sh
@@ -142,7 +142,7 @@ same size as the 2026-09-16 GPU proof of the same scenario
 
 ### Reproduction
 
-Build the checked ELF as in the [README](../README.md), then:
+Build the checked ELF as in [the build instructions](build.md), then:
 
 ```sh
 .venv/bin/python scripts/zisk_guest.py
