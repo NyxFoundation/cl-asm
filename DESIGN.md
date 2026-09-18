@@ -1,6 +1,6 @@
 # CL ASM v0 — Design Proposal
 
-Last updated: 2026-09-13. This document records the v0 design. The complete 175-instruction `weigh` routine, bounded Lean contract, concrete calling witness, ELF, and official-reference differential tests are implemented; see [Whole-Routine Contract and Validation](docs/weigh.md). The [completion plan](docs/implementation-plan.md) tracks validation and benchmark evidence.
+Last updated: 2026-09-13. This document records the v0 design. The complete 175-instruction `weigh` routine, bounded Lean contract, concrete calling witness, ELF, and official-reference differential tests are implemented; see [Whole-Routine Contract and Validation](docs/weigh.md). The [completion plan](docs/implementation-plan.md) tracks validation and benchmark evidence. [The roadmap](docs/roadmap.md) records why the consensus layer is being proved, the zkVM measurements' consequences, the PoC decisions, and the remaining consensus-layer work in the lean Ethereum setting.
 
 ## 1. Agreed Scope
 
