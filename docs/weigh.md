@@ -1,6 +1,6 @@
 ---
 title: Whole-Routine Contract and Validation
-last_updated: 2026-09-13
+last_updated: 2026-10-05
 tags:
   - consensus
   - lean
@@ -11,7 +11,7 @@ tags:
 # Whole-Routine Contract and Validation
 
 `ClAsm.Weigh.program` implements `weigh_justification_and_finalization` with
-175 uncompressed RV64 instructions, including its return. It implements the
+175 uncompressed RV64 instructions (700 bytes), including its return. It implements the
 inner routine; the caller's first-two-epochs skip is not part of this operation.
 `SLOTS_PER_EPOCH = 32` and `SLOTS_PER_HISTORICAL_ROOT = 8192` are fixed.
 
@@ -75,7 +75,7 @@ Each block is connected to a checked contiguous slice of the exact `Program`.
 `Weigh.Meaning.executionResult_correct` identifies its word-level result with
 the mathematical state transition. `Weigh.Correctness.program_spec` combines
 these into the full frame-preserving bounded contract, with a limit of 175 steps.
-This is a conservative static bound; measured paths use 99–147 steps.
+This is a conservative static bound; measured paths are in [the benchmark results](benchmarks.md).
 
 `Weigh.Witness` constructs a complete inhabited call: code, all ABI registers,
 136-byte state, all 8192 roots, 80-byte scratch, and an outside-code return.
@@ -100,7 +100,7 @@ finalization rule and competing overwrites, ring-buffer boundaries, genesis,
 and deterministic random inputs. Out-of-contract range/time cases and malformed
 input are rejected separately. The harness checks preserved registers and
 initialized memory, both saved scratch checkpoints, successful return, and failure with one fewer than the
-actually consumed steps. The seven helper probes add 1,747 cases.
+actually consumed steps. The seven helper probes are in [the helper contracts](helpers.md).
 
 The generator emits `weigh.program.json` from the proved instruction sequence.
 An independent Python encoder assembles its raw instruction words separately,
@@ -112,13 +112,9 @@ inject public/private axioms, and exercise invalid executions and tool failures.
 
 The Lean theorem covers the pinned RV64 model and reference-condition
 translation. Translation from official Python semantics is reviewed and tested,
-not machine-proved. The emitter, GNU assembler/linker, ELF loader, byte checker,
-and efficient interpreter state conversion are also tested boundaries.
-The dependency's decoding-to-Sail and execution-state simulation gaps remain
-as documented in [the bootstrap contract](bootstrap.md).
-
-The axiom audit includes imported and private declarations and permits only
-`propext`, `Classical.choice`, and `Quot.sound`. No `sorryAx` or compiler-trusting
-proof axioms are accepted. ELF output is generated from proved model code and
-validated by tests; it is not itself formally certified. zkVM integration and
-individual execution proofs remain outside the v0 scope.
+not machine-proved. The byte checker and efficient interpreter state conversion
+are tested boundaries. Other tested boundaries, the permitted axioms, and the
+dependency's decoding-to-Sail and execution-state simulation gaps are in
+[the bootstrap contract](bootstrap.md#validation-and-trust-boundaries).
+ELF output is generated from proved model code and validated by tests; it is not
+itself formally certified. Scope is in [the completion plan](implementation-plan.md).

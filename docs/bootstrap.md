@@ -1,6 +1,6 @@
 ---
 title: Bootstrap Contract and Validation
-last_updated: 2026-09-13
+last_updated: 2026-10-05
 tags:
   - lean
   - riscv
@@ -8,11 +8,6 @@ tags:
 ---
 
 # Bootstrap Contract and Validation
-
-The foundation establishes the build, proof, code-generation, and execution
-path for `epochAtSlot`. The [helper stage](helpers.md) extends that path to six
-more callable probes. The [whole-routine contract](weigh.md) documents the
-complete `weigh` implementation built on this foundation.
 
 ## Callable probe
 
@@ -93,7 +88,4 @@ loader, and consistency checks also remain outside the formal proof.
 
 ## Whole routine
 
-The helper stage now supplies checkpoint/root ownership, arithmetic macros,
-root addressing, copying, bounded callable proofs, and ELF tests. These are
-composed into the [complete `weigh` contract](weigh.md), including the state,
-root-array ownership, arithmetic conditions, and ordered conditional updates.
+See the [complete `weigh` contract](weigh.md).

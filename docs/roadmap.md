@@ -1,6 +1,6 @@
 ---
 title: Purpose and Roadmap for Proving the Consensus Layer
-last_updated: 2026-09-18
+last_updated: 2026-10-05
 tags:
   - consensus
   - zkvm
@@ -9,13 +9,8 @@ tags:
 
 # Purpose and Roadmap for Proving the Consensus Layer
 
-This document records why `weigh_justification_and_finalization` was chosen,
-where it sits in the beacon chain's state transition, what the 2026-09-17
-ZisK measurements established, which decisions were taken for the PoC, and
-which parts of the consensus layer remain candidates for zkVM proving as
-Ethereum moves to a proven execution layer and hash-based signatures. It is a
-statement of direction, not a specification; the contracts and measurements
-it cites live in [the whole-routine contract](weigh.md) and
+This document is a statement of direction, not a specification; the contracts
+and measurements it cites live in [the whole-routine contract](weigh.md) and
 [the benchmark record](benchmarks.md).
 
 ## 1. Why prove the consensus-layer state transition
@@ -30,7 +25,7 @@ re-executes" with "one prover executes, everyone verifies a proof", and it
 makes the verified claim "the specification's transition" rather than "what
 client X computed", provided the proved program is itself shown equivalent to
 the specification. That is the role of the Lean proof in this repository: the
-zkVM proves that the 175-instruction program ran, and Lean proves that this
+zkVM proves that the program ran, and Lean proves that this
 program implements the specified transition, so neither trust assumption
 depends on a client implementation.
 
@@ -38,7 +33,7 @@ depends on a client implementation.
 consensus conclusion (which checkpoint is final) while containing no hashing
 and no signature checks, so the whole pipeline (Lean contract, ELF emission,
 byte checking, official-reference differential tests, zkVM execution and
-proof) can be exercised end to end on a 700-byte program.
+proof) can be exercised end to end.
 
 ## 2. Where the routine sits
 
@@ -70,20 +65,10 @@ opaque 32-byte values.
 
 ## 3. What the zkVM measurements established
 
-The [ZisK measurements](benchmarks.md#zisk-zkvm-measurements) on an RTX 5090
-gave, per scenario, 99–147 ZisK steps for `weigh` (equal to the modeled RV64
-step counts), about 74,400 steps for the guest wrapper that materializes the
-8192-entry root array, and 1.8–2.0 s of GPU proof generation that does not
-vary with the scenario. ZisK proves fixed 2^22-row trace tables per segment;
-this workload fills under 2% of the main table, so 97.6% of ZisK's own cost
-model is the fixed base cost of one segment. Consequences:
+Consequences of the [ZisK measurements](benchmarks.md#zisk-zkvm-measurements):
 
-- Instruction-count reductions in `weigh` cannot change proof time until a
-  workload exceeds one segment. The figure to track is steps by symbol, not
-  wall time.
-- Per-process overheads (about 6.7 s of proving-key loading, a one-time GPU
-  cache build) dominate the measured wall time. They are deployment costs, to
-  be removed by a resident prover, not properties of the routine.
+- Per-process overheads dominate the measured wall time. They are deployment
+  costs, to be removed by a resident prover, not properties of the routine.
 - Meaningful cost measurement starts when loops over validators enter the
   guest. The wrapper's root initialization is already 500 times the routine.
 
@@ -94,7 +79,7 @@ model is the fixed base cost of one segment. Consequences:
 | State access model | Follow the beacon spec's in-memory `BeaconState`: pass all 8192 roots as input | The PoC conforms to the spec as written. Stateless access with SSZ Merkle proofs is recorded in [issue #4](https://github.com/NyxFoundation/cl-asm/issues/4) for later |
 | Headline metric | `weigh` steps by symbol and ZisK's internal proof-generation time; wall time, key loading, and setup reported as separate overheads | The user's criterion is practical usability of the whole STF; one-time and per-process costs do not bear on it |
 | Resident prover | Future work | ZisK ships coordinator and worker binaries; not needed to judge the routine |
-| GPU re-measurement | Not repeated for this revision | The guest built from the repository is byte-identical in every code and data section to the one measured on 2026-09-16 |
+| GPU re-measurement | Not repeated for this revision | The guest built from the repository is byte-identical in every code and data section to the one measured on 2026-09-16 ([ZisK measurements](benchmarks.md#zisk-zkvm-measurements)) |
 
 ## 5. Remaining consensus-layer work for a zkVM
 

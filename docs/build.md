@@ -1,6 +1,6 @@
 ---
 title: Build, Validate, and Run the ZisK Guest
-last_updated: 2026-09-18
+last_updated: 2026-10-05
 tags:
   - build
   - testing
@@ -34,14 +34,8 @@ output directory. Compression and linker relaxation are disabled; the image
 uses RV64IM with LP64 and contains only 4-byte instructions. Each probe has its
 own ELF entry point. `weigh.elf` uses the internal ABI from the design.
 
-The tests execute 1,747 helper cases and 4,796 full-routine cases against the
-pinned official Python function and its actual SSZ integer types. Coverage
-includes genesis, all four-bit patterns, threshold equality and integer limits,
-root-index wraparound, and ordered checkpoint overwrites. They check independent
-instruction encodings, state results, preserved registers and initialized memory,
-return, and fuel bounds.
-Additional tests reject wrong arithmetic, register corruption, misplaced
-stores, traps, infinite execution, altered ELF metadata/bytes, and tool failures.
+Helper cases are in [the helper contracts](helpers.md). Full-routine cases are in
+[the whole-routine contract](weigh.md).
 
 ## ZisK guest
 
@@ -79,9 +73,7 @@ the guest's public outputs against `<scenario>.public.bin`, and, with
 lists the remaining options and defaults. `HWLOC_COMPONENTS=-gl` stops
 hwloc's GL probe from waiting on an X11 socket.
 
-The Lean proofs cover the modeled instruction sequence. ELF generation,
-decoding, loading, execution-state conversion, and the ZisK wrapper are checked
-by tests and are not formally proved. Benchmarks report RV64 instruction counts
-separately from host interpreter time, and ZisK step counts separately from
-GPU proving time; they do not measure native RV64 execution.
-See [the recorded results and reproduction steps](benchmarks.md).
+Trust boundaries are in
+[the bootstrap contract](bootstrap.md#validation-and-trust-boundaries). Scope is in
+[the completion plan](implementation-plan.md).
+See [the recorded results](benchmarks.md).
