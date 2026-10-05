@@ -1,6 +1,6 @@
 ---
 title: Weigh Benchmark Results
-last_updated: 2026-09-18
+last_updated: 2026-10-05
 tags:
   - benchmark
   - consensus
@@ -10,10 +10,8 @@ tags:
 
 # Weigh Benchmark Results
 
-The complete checked `weigh.elf` uses 99–147 modeled RV64 instructions across
-these scenarios. On the host below, the median batch-average interpreter time
-was 2.212–4.999 ms per call. The proved static bound is 175 instructions and the
-executable code is 700 bytes.
+The proved static bound and executable size are in
+[the whole-routine contract](weigh.md).
 
 | Scenario | RV64 steps | Median ms/call | Min–max batch average ms/call |
 |---|---:|---:|---:|
@@ -39,15 +37,10 @@ Fixtures are `benchmark_cases()` in `tests/weigh_cases.py` at the recorded revis
 
 ## Method and reproduction
 
-Build the measured revision using the [build instructions](build.md),
-including the pinned Python environment and RISC-V binutils. Then run:
-
-```sh
-.venv/bin/python scripts/benchmark.py --iterations 200 --batches 21
-```
-
-`RISCV_AS` and `RISCV_LD` can select explicit binutils paths. The script validates
-the independently assembled ELF bytes and compares scenario results with the
+Build the measured revision using the
+[build instructions](build.md#build-and-validate), including the pinned Python
+environment and RISC-V binutils. `scripts/benchmark.py` validates the
+independently assembled ELF bytes and compares scenario results with the
 official function. Each scenario runs 100 warmup calls and 21 batches of 200
 calls. Timings use `IO.monoNanosNow`; the table reports the median and range of
 the 21 batch averages, rather than individual-call latency percentiles.
@@ -70,8 +63,6 @@ same 700 code bytes (SHA-256 `a147a194…3c9cb8`) as `weigh.elf`, and every
 loadable code and data section of `weigh-guest.elf` is byte-identical to the
 guest measured on 2026-09-16, so both measurement dates below describe the same
 program. All scenarios are the same `benchmark_cases()` fixtures as above.
-The guest wrapper materializes all 8192 `block_roots` in memory, as the spec's
-in-memory `BeaconState` does; `weigh` itself reads two of them.
 
 ### Steps and cost model (2026-09-17, `ziskemu -X -S`)
 
@@ -142,19 +133,9 @@ same size as the 2026-09-16 GPU proof of the same scenario
 
 ### Reproduction
 
-Build the checked ELF as in [the build instructions](build.md), then:
-
-```sh
-.venv/bin/python scripts/zisk_guest.py
-HWLOC_COMPONENTS=-gl .venv/bin/python scripts/benchmark_zisk.py --prove --gpu \
-  --ziskemu <zisk>/bin/ziskemu --cargo-zisk <zisk>/bin/cargo-zisk-gpu \
-  --proving-key <zisk>/provingKey
-```
-
-Without `--prove` the script only runs the emulator, which needs no GPU. Every
-tool invocation's output is written under `build/zisk/results/logs`, and
-`report.json` records stage timings parsed from `cargo-zisk prove -vv`, the
-trace-table instances, proof sizes and hashes, and verification wall time.
+Commands are in [the ZisK guest instructions](build.md#zisk-guest). `report.json` records
+stage timings parsed from `cargo-zisk prove -vv`, the trace-table instances,
+proof sizes and hashes, and verification wall time.
 
 These numbers show where proving time goes for a routine far below one
 segment. Instruction-count reductions in `weigh` cannot change GPU proof time

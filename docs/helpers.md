@@ -1,6 +1,6 @@
 ---
 title: Helper Contracts and Validation
-last_updated: 2026-09-13
+last_updated: 2026-10-05
 tags:
   - consensus
   - lean
@@ -99,12 +99,9 @@ operands, a corrupted return in every probe, and assembler failure.
 The axiom audit covers all new proofs and their imported RV64 dependencies,
 including private declarations recovered from Lean's internal name prefix.
 Negative tests inject unused public and private axioms and require rejection.
-Only `propext`, `Classical.choice`, and `Quot.sound` are permitted. ELF generation
-and interpreter conversion retain the [bootstrap trust boundaries](bootstrap.md).
+The permitted axioms, ELF generation, and interpreter conversion retain the
+[bootstrap trust boundaries](bootstrap.md#validation-and-trust-boundaries).
 
 ## Whole routine
 
-The [complete `weigh` contract](weigh.md) composes these helpers with both
-justification updates and all four finalization checks. It includes the state
-and root-array ownership, arithmetic and temporal preconditions, a bounded
-return proof, a concrete calling witness, and official Python differential tests.
+The [complete `weigh` contract](weigh.md) composes these helpers.

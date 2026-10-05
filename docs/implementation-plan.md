@@ -1,6 +1,6 @@
 ---
 title: Implementation Completion Plan
-last_updated: 2026-09-17
+last_updated: 2026-10-05
 tags:
   - consensus
   - verification
@@ -25,10 +25,6 @@ benchmarks. Helper proofs and passing helper tests alone do not complete it.
 | ZisK guest and zkVM measurements | Byte-identical embedded routine, reference-checked public outputs, symbol-level steps separated from GPU proving time and fixed overheads | Complete: [ZisK section](benchmarks.md#zisk-zkvm-measurements); stateless root access deferred to [issue #4](https://github.com/NyxFoundation/cl-asm/issues/4) |
 | Final review | Requirement audit, source build, tests, axiom audit, workflow lint | Complete locally; [PR #2 checks](https://github.com/NyxFoundation/cl-asm/pull/2/checks) gate delivery |
 
-The [whole-routine contract](weigh.md) records the input mapping, preservation,
-proof composition, inhabited witness, official-reference extraction, and trust
-boundaries. The final benchmark must identify a clean source revision and ELF
-hash, retain raw batch times, and separate modeled RV64 steps from host timing.
-Cases outside the calling preconditions are reported separately from successful
-differential cases. Formal ELF correspondence remains outside the approved v0 scope; zkVM execution
-proofs are measured but not part of the Lean contract.
+Formal ELF correspondence remains outside the approved v0 scope; zkVM execution
+proofs are measured but not part of the Lean contract. Cases outside the calling
+preconditions are reported separately from successful differential cases.
