@@ -16,6 +16,10 @@ def encode_instruction(instruction):
     i_forms = {"ADDI": (0x13, 0), "SLTIU": (0x13, 3), "XORI": (0x13, 4),
                "ORI": (0x13, 6), "ANDI": (0x13, 7), "SLLI": (0x13, 1),
                "SRLI": (0x13, 5), "LD": (0x03, 3), "JALR": (0x67, 0)}
+    if operation == "LUI":
+        return 0x37 | a << 7 | (b & 0xFFFFF) << 12
+    if operation == "SUB":
+        return 0x40000033 | a << 7 | b << 15 | c << 20
     if operation in r_forms:
         return 0x33 | a << 7 | r_forms[operation] << 12 | b << 15 | c << 20
     if operation in i_forms:
@@ -49,11 +53,11 @@ def code_bytes(image: bytes) -> bytes:
     return image[offset:offset + filesz]
 
 
-def reference_bytes(program, linker_script: Path) -> bytes:
+def reference_bytes(program, linker_script: Path, symbol: str = "weigh") -> bytes:
     words = [encode_instruction(instruction) for instruction in program]
     with tempfile.TemporaryDirectory(prefix="cl-asm-encoding-") as directory:
         source, obj, elf = [Path(directory) / f"reference.{suffix}" for suffix in ["s", "o", "elf"]]
-        source.write_text(".section .text\n.globl weigh\nweigh:\n" +
+        source.write_text(f".section .text\n.globl {symbol}\n{symbol}:\n" +
                           "".join(f".word 0x{word:08x}\n" for word in words))
         subprocess.run([os.environ.get("RISCV_AS", "riscv64-unknown-elf-as"),
                         "-march=rv64im", "-mabi=lp64", "-mno-relax", "--fatal-warnings",

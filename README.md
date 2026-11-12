@@ -6,11 +6,18 @@ routine (700 bytes) whose Lean contract proves the specified state transition,
 resource preservation, and return within 175 steps. The same bytes run as a
 ZisK zkVM guest.
 
+The standalone `aggregate` routine computes the caller's three balances in
+78 RV64 instructions (312 bytes), with a proved bound of `52 * N + 24`
+steps. Its generated ELF is checked against the pinned official reference;
+its ZisK integration is not yet included.
+
 - [DESIGN.md](DESIGN.md): scope, ABI, memory layout, trust boundaries.
 - [Roadmap](docs/roadmap.md): why the consensus layer is being proved, zkVM
   findings, PoC decisions, and remaining work.
 - [Whole-routine contract](docs/weigh.md): preconditions, calling witness,
   official-reference tests.
+- [Balance aggregation](docs/aggregate.md): internal ABI, proof, JSON-lines runner,
+  and per-validator step counts.
 - [Build and validate](docs/build.md): toolchain, commands, test coverage, and
   the ZisK guest.
 - [Benchmarks](docs/benchmarks.md): host interpreter timing and ZisK results.
@@ -18,6 +25,7 @@ ZisK zkVM guest.
 ```sh
 lake --no-cache --wfail build
 python3 -m venv .venv && .venv/bin/python -m pip install -r tests/requirements.txt
+lake env lean scripts/CheckAxioms.lean
 .lake/build/bin/cl-asm build && .lake/build/bin/cl-asm-test build
 .venv/bin/python -m unittest discover -s tests -v
 ```

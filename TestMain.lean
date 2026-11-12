@@ -1,5 +1,6 @@
 import ClAsm.Codegen
 import ClAsm.Harness
+import ClAsm.Aggregate.Test
 
 open ClAsm RiscvZkvm.Rv64
 
@@ -25,6 +26,8 @@ private def shouldEmitExactInstructionForms : IO Unit := do
   check ((Codegen.emitInstr (.AND .x29 .x29 .x31)).toOption == some "and x29, x29, x31") "AND emission"
   check ((Codegen.emitInstr (.BNE .x29 .x0 8)).toOption == some "bne x29, x0, . + 8") "BNE emission"
   check ((Codegen.emitInstr (.JAL .x0 60)).toOption == some "jal x0, . + 60") "JAL emission"
+  check ((Codegen.emitInstr (.LUI .x28 0x3B9AD)).toOption == some "lui x28, 244141") "LUI emission"
+  check ((Codegen.emitInstr (.SUB .x7 .x0 .x5)).toOption == some "sub x7, x0, x5") "SUB emission"
   check (Codegen.emitInstr .ECALL |>.toOption.isNone) "unsupported instructions must fail"
 
 private def shouldRejectBadExecution (path : System.FilePath) : IO Unit := do
@@ -72,6 +75,7 @@ def main (args : List String) : IO UInt32 := do
         Harness.checkElf kind (System.FilePath.mk directory / s!"{kind.name}.elf")
       shouldRejectBadExecution (System.FilePath.mk directory / "epoch-at-slot.elf")
       shouldRejectCopyCorruption (System.FilePath.mk directory / "copy-checkpoint.elf")
+      Aggregate.Test.checkHarness (System.FilePath.mk directory / "aggregate.elf")
     | [name, path] =>
       let some kind := Probes.all.find? (fun kind => kind.name == name)
         | throw <| IO.userError "unknown probe"
