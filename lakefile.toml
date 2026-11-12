@@ -1,6 +1,6 @@
 name = "ClAsm"
 version = "0.1.0"
-defaultTargets = ["ClAsm", "cl-asm", "cl-asm-test", "cl-asm-weigh"]
+defaultTargets = ["ClAsm", "cl-asm", "cl-asm-test", "cl-asm-weigh", "cl-asm-aggregate"]
 
 [[require]]
 name = "riscv-zkvm"
@@ -21,3 +21,7 @@ root = "TestMain"
 [[lean_exe]]
 name = "cl-asm-weigh"
 root = "WeighMain"
+
+[[lean_exe]]
+name = "cl-asm-aggregate"
+root = "AggregateMain"

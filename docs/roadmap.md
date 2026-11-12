@@ -1,6 +1,6 @@
 ---
 title: Purpose and Roadmap for Proving the Consensus Layer
-last_updated: 2026-10-05
+last_updated: 2026-11-12
 tags:
   - consensus
   - zkvm
@@ -91,7 +91,7 @@ figures.
 
 | Function | Content |
 |---|---|
-| balance aggregation in `process_justification_and_finalization` | `get_total_active_balance`, previous and current target balances from participation flags; the direct caller of `weigh` |
+| balance aggregation in `process_justification_and_finalization` | Standalone [Lean proof and ELF runner](aggregate.md) complete: 52 local-interpreter steps per validator; zkVM guest integration remains |
 | `process_inactivity_updates` | inactivity scores |
 | `process_rewards_and_penalties` | rewards and penalties from participation flags |
 | `process_registry_updates` | activation and exit queues |
@@ -154,9 +154,9 @@ already handles.
 
 ## 7. Recommended next steps
 
-1. Bring the balance aggregation of `process_justification_and_finalization`
-   into the guest and record steps per validator; this is the first measurement
-   that speaks to practical cost.
+1. Integrate the proved standalone `aggregate` routine into the zkVM guest.
+   The local interpreter now measures 52 steps per validator; record guest
+   overhead and proof-generation cost separately before extrapolating.
 2. In parallel, check that the Lean-contract-to-ELF method applies to the lean
    consensus (3SF) state transition, whose specification is small. The future
    consensus-layer zkVM target is that transition, and confirming the tooling

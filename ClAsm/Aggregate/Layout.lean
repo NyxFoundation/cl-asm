@@ -2,7 +2,7 @@ import ClAsm.Layout
 
 namespace ClAsm.Aggregate
 
-/-- Each validator occupies four little-endian 64-bit words in SSZ field order:
+/-- Each validator occupies four words in the internal layout (not SSZ):
     effective balance, activation epoch, exit epoch, and the slashed boolean. -/
 def validatorBytes : Nat := 32
 /-- Each participation entry is one zero-extended uint8 stored in one word. -/

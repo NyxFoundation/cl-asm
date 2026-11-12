@@ -15,13 +15,41 @@ structure Addresses where
   deriving Repr, BEq, DecidableEq
 
 structure Registers where
-  slot : Word
-  scratchBase : Word
-  returnAddress : Word
+  t5 : Word := 0
+  t6 : Word := 0
+  t7 : Word := 0
+  epoch : Word := 0
+  total : Word := 0
+  increment : Word := 0
+  previous : Word := 0
+  current : Word := 0
+  previousEpoch : Word := 0
   deriving Repr, BEq, DecidableEq
 
-def Registers.owns (a : Addresses) (r : Registers) : Assertion :=
-  (.x0 ↦ᵣ 0) ** (.x1 ↦ᵣ a.returnAddress) ** (.x14 ↦ᵣ r.slot) ** (.x15 ↦ᵣ a.scratch)
+def Registers.owns (r : Registers) : Assertion :=
+  (.x5 ↦ᵣ r.t5) ** (.x6 ↦ᵣ r.t6) ** (.x7 ↦ᵣ r.t7) ** (.x16 ↦ᵣ r.epoch) **
+    (.x17 ↦ᵣ r.total) ** (.x28 ↦ᵣ r.increment) ** (.x29 ↦ᵣ r.previous) **
+    (.x30 ↦ᵣ r.current) ** (.x31 ↦ᵣ r.previousEpoch)
+
+def callRegisters (a : Addresses) (input : Input) (processed : Nat) : Assertion :=
+  (.x0 ↦ᵣ 0) ** (.x1 ↦ᵣ a.returnAddress) ** (.x14 ↦ᵣ input.slot) ** (.x15 ↦ᵣ a.scratch) **
+    (.x10 ↦ᵣ a.validators + BitVec.ofNat 64 (32 * processed)) **
+    (.x11 ↦ᵣ a.previousFlags + BitVec.ofNat 64 (8 * processed)) **
+    (.x12 ↦ᵣ a.currentFlags + BitVec.ofNat 64 (8 * processed)) **
+    (.x13 ↦ᵣ BitVec.ofNat 64 (input.validators.length - processed))
+
+def arraysOwn (a : Addresses) (input : Input) : Assertion :=
+  validatorsOwn a.validators input.validators ** wordsOwn a.previousFlags input.previousFlags **
+    wordsOwn a.currentFlags input.currentFlags
+
+theorem arraysOwn_pcFree (a : Addresses) (input : Input) : (arraysOwn a input).pcFree :=
+  pcFree_sepConj (validatorsOwn_pcFree _ _)
+    (pcFree_sepConj (wordsOwn_pcFree _ _) (wordsOwn_pcFree _ _))
+
+def scratchOwn (a : Addresses) (total previous current : Word) : Assertion :=
+  ((a.scratch + signExtend12 0) ↦ₘ total) **
+    ((a.scratch + signExtend12 8) ↦ₘ previous) **
+    ((a.scratch + signExtend12 16) ↦ₘ current)
 
 def disjointRanges (a sizeA b sizeB : Nat) : Prop := a + sizeA ≤ b ∨ b + sizeB ≤ a
 
@@ -38,6 +66,7 @@ structure ValidAddresses (a : Addresses) (n : Nat) : Prop where
   scratchNoWrap : a.scratch.toNat + answerBytes < 2^64
   codeNoWrap : a.entry.toNat + 4 * program.length < 2^64
   validatorsFlags : disjointRanges a.validators.toNat (32 * n) a.previousFlags.toNat (8 * n)
+  validatorsCurrent : disjointRanges a.validators.toNat (32 * n) a.currentFlags.toNat (8 * n)
   validatorsScratch : disjointRanges a.validators.toNat (32 * n) a.scratch.toNat answerBytes
   previousCurrent : disjointRanges a.previousFlags.toNat (8 * n) a.currentFlags.toNat (8 * n)
   previousScratch : disjointRanges a.previousFlags.toNat (8 * n) a.scratch.toNat answerBytes
@@ -61,28 +90,16 @@ structure ValidInput (input : Input) : Prop where
   current : sumTarget input.validators input.currentFlags
     (currentEpoch input) < 2^64
 
-/-- The concrete witness-style calling registers. -/
-def witnessRegisters (a : Addresses) (input : Input) : Registers :=
-  ⟨input.slot, a.scratch, a.returnAddress⟩
+def precondition (a : Addresses) (input : Input) (registers : Registers)
+    (scratchT scratchP scratchC : Word) : Assertion :=
+  registers.owns ** callRegisters a input 0 ** arraysOwn a input **
+    scratchOwn a scratchT scratchP scratchC
 
-/-- The routine's exact calling assertion. -/
-def precondition (a : Addresses) (input : Input) (scratchT scratchP scratchC : Word) :
-    Assertion :=
-  fun h => ∃ registers : Registers,
-    (Registers.owns a registers ** (.x10 ↦ᵣ a.validators) ** (.x11 ↦ᵣ a.previousFlags) **
-      (.x12 ↦ᵣ a.currentFlags) ** (.x13 ↦ᵣ BitVec.ofNat 64 input.validators.length) ** 
-      validatorsOwn a.validators input.validators ** wordsOwn a.previousFlags input.previousFlags **
-      wordsOwn a.currentFlags input.currentFlags **
-      (a.scratch ↦ₘ scratchT) ** (a.scratch + 8 ↦ₘ scratchP) ** (a.scratch + 16 ↦ₘ scratchC)) h
-
-/-- On return the scratch holds the three saturated balances and every array
-    is preserved. -/
+/-- Return preserves the inputs and stores all three increment-floored balances. -/
 def postcondition (a : Addresses) (input : Input) : Assertion :=
   fun h => ∃ registers : Registers,
-    (Registers.owns a registers ** (a.scratch ↦ₘ (aggregateResult input).1) **
-      (a.scratch + 8 ↦ₘ (aggregateResult input).2.1) **
-      (a.scratch + 16 ↦ₘ (aggregateResult input).2.2) **
-      validatorsOwn a.validators input.validators ** wordsOwn a.previousFlags input.previousFlags **
-      wordsOwn a.currentFlags input.currentFlags) h
+    (registers.owns ** callRegisters a input input.validators.length ** arraysOwn a input **
+      scratchOwn a (aggregateResult input).1 (aggregateResult input).2.1
+        (aggregateResult input).2.2) h
 
 end ClAsm.Aggregate

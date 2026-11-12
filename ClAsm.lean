@@ -13,3 +13,5 @@ import ClAsm.Weigh.Roots
 import ClAsm.Weigh.Finalization
 import ClAsm.Weigh.Correctness
 import ClAsm.Weigh.Witness
+import ClAsm.Aggregate.Proof
+import ClAsm.Aggregate.Witness

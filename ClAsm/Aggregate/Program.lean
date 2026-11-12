@@ -42,7 +42,8 @@ def bodyStraight : Program :=
   activeFold .x16 .x17 ++ targetFold .x31 .x11 .x29 ++ targetFold .x16 .x12 .x30 ++ walk
 
 /-- The guarded loop: guard, body, and the jump back to the guard. -/
-def loopBackOffset : BitVec 21 := BitVec.ofInt 21 (-(4 * (bodyStraight.length + 1) : Int))
+def loopBackOffset : BitVec 21 :=
+  BitVec.ofInt 21 (-(4 * (2 + bodyStraight.length) : Int))
 def loopExitOffset : BitVec 21 := 4 * (bodyStraight.length + 2)
 
 def loopGuard : Program := [.BNE .x13 .x0 8, .JAL .x0 loopExitOffset]
@@ -50,17 +51,17 @@ def backJal : Program := [.JAL .x0 loopBackOffset]
 
 def loop : Program := loopGuard ++ bodyStraight ++ backJal
 
+def saturateOne (reg : Reg) (offset : BitVec 12) : Program :=
+  [.SLTU .x5 reg .x28] ++ if_eq .x5 .x0 [.SD .x15 reg offset] [.SD .x15 .x28 offset]
+
 /-- Store each saturated balance or the increment floor, then return. -/
 def epilogue : Program :=
-  [.SLTU .x5 .x17 .x28] ++ if_eq .x5 .x0 [.SD .x15 .x17 0] [.SD .x15 .x28 0] ++
-    [.SLTU .x5 .x29 .x28] ++ if_eq .x5 .x0 [.SD .x15 .x29 8] [.SD .x15 .x28 8] ++
-    [.SLTU .x5 .x30 .x28] ++ if_eq .x5 .x0 [.SD .x15 .x30 16] [.SD .x15 .x28 16] ++
-    [.JALR .x0 .x1 0]
+  saturateOne .x17 0 ++ saturateOne .x29 8 ++ saturateOne .x30 16 ++ [.JALR .x0 .x1 0]
 
 def program : Program := prologue ++ loop ++ epilogue
 
 /-- The step count for `n` admitted validators is bounded by this function. -/
-def stepBound (n : Nat) : Nat := 2 + n * (bodyStraight.length + 1) + epilogue.length + 2
+def stepBound (n : Nat) : Nat := 52 * n + 24
 
 theorem prologue_length : prologue.length = 9 := by rfl
 theorem bodyStraight_length : bodyStraight.length = 50 := by rfl
@@ -70,17 +71,17 @@ theorem epilogue_length : epilogue.length = 16 := by decide
 theorem program_length : program.length = 78 := by decide
 
 theorem loopBack_word :
-    signExtend21 (BitVec.ofInt 21 (-(204 : Int))) = BitVec.ofNat 64 (2^64 - 204) := by
+    signExtend21 (BitVec.ofInt 21 (-(208 : Int))) = BitVec.ofNat 64 (2^64 - 208) := by
   simp only [signExtend21]
   bv_decide
 
 /-- The back jump lands exactly on the loop guard. -/
-theorem loopBackOffset_value : loopBackOffset = BitVec.ofInt 21 (-(204 : Int)) := by
-  show BitVec.ofInt 21 (-(4 * (bodyStraight.length + 1) : Int)) = _
+theorem loopBackOffset_value : loopBackOffset = BitVec.ofInt 21 (-(208 : Int)) := by
+  show BitVec.ofInt 21 (-(4 * (2 + bodyStraight.length) : Int)) = _
   rw [bodyStraight_length]
   rfl
 
-theorem loopBackTarget (branch head : Word) (hbranch : branch = head + BitVec.ofNat 64 204) :
+theorem loopBackTarget (branch head : Word) (hbranch : branch = head + BitVec.ofNat 64 208) :
     branch + signExtend21 loopBackOffset = head := by
   rw [hbranch, loopBackOffset_value, loopBack_word]
   apply BitVec.eq_of_toNat_eq

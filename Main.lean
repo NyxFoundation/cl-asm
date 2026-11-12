@@ -1,6 +1,7 @@
 import ClAsm.Probes
 import ClAsm.Codegen
 import ClAsm.Weigh.Program
+import ClAsm.Aggregate.Program
 
 def main (args : List String) : IO UInt32 := do
   try
@@ -10,6 +11,8 @@ def main (args : List String) : IO UInt32 := do
         let path ← ClAsm.Codegen.build directory kind.name kind.program
         IO.println s!"Generated {path}"
       let path ← ClAsm.Codegen.build directory "weigh" ClAsm.Weigh.program
+      IO.println s!"Generated {path}"
+      let path ← ClAsm.Codegen.build directory "aggregate" ClAsm.Aggregate.program
       IO.println s!"Generated {path}"
       return 0
     | _ =>

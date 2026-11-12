@@ -3,8 +3,10 @@
 ## Scope and architecture
 - This is a Lean 4.33.0 project for proving fixed RV64 instruction sequences and validating generated ELF artifacts for Ethereum consensus-layer operations.
 - `ClAsm/Weigh/Program.lean` defines the 175-instruction `weigh` program. Its contract, correctness proof, and concrete witness are split across `ClAsm/Weigh/{Contract,Correctness,Witness}.lean` and related modules.
+- `ClAsm/Aggregate/Program.lean` defines the standalone 78-instruction balance-aggregation routine. `LoopProof.lean`, `Epilogue.lean`, and `Proof.lean` prove array preservation and return within `52 * N + 24` steps; `Witness.lean` proves a concrete calling precondition is satisfiable.
 - `ClAsm/Codegen/Emit.lean` is pure instruction-to-assembly emission; `Layout.lean` owns image/linker layout; `Driver.lean` performs IO and invokes the external assembler/linker.
 - `Main.lean` generates probe and `weigh` artifacts, `TestMain.lean` validates emission/ELF/helper behavior, and `WeighMain.lean` is the JSON-lines runner used by differential tests.
+- `AggregateMain.lean` runs `aggregate.elf` as JSON lines; `ClAsm/Aggregate/{Input,Harness,Benchmark}.lean` validate inputs, execute the image, and measure host-interpreter cost. The ZisK wrapper still covers only `weigh`.
 - Project positioning: this is an independent, forward-looking PoC for the cl-asm concept associated with Justin Drake (JD). It is intended to design and demonstrate cl-asm ahead of that effort; do not imply official affiliation or endorsement.
 - Future backend direction: when `leanEthereum/leanVM` supports RISC-V, evaluate replacing the ZisK experiment with leanVM. Keep the current ZisK path until ABI/artifact compatibility, proof boundaries, and benchmark behavior have been compared.
 

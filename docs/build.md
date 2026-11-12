@@ -1,6 +1,6 @@
 ---
 title: Build, Validate, and Run the ZisK Guest
-last_updated: 2026-10-05
+last_updated: 2026-11-12
 tags:
   - build
   - testing
@@ -32,10 +32,13 @@ names differ from `riscv64-unknown-elf-as` and `riscv64-unknown-elf-ld`.
 The generator produces `.s`, `.ld`, `.o`, `.elf`, and `.program.json` files under the supplied
 output directory. Compression and linker relaxation are disabled; the image
 uses RV64IM with LP64 and contains only 4-byte instructions. Each probe has its
-own ELF entry point. `weigh.elf` uses the internal ABI from the design.
+own ELF entry point. `weigh.elf` uses the internal ABI from the design;
+`aggregate.elf` uses the [balance-aggregation ABI](aggregate.md).
 
 Helper cases are in [the helper contracts](helpers.md). Full-routine cases are in
-[the whole-routine contract](weigh.md).
+[the whole-routine contract](weigh.md) and [the aggregation contract](aggregate.md).
+The default build includes the `cl-asm-aggregate` JSON-lines runner and its
+optional host-interpreter benchmark mode.
 
 ## ZisK guest
 

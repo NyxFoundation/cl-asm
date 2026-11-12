@@ -189,7 +189,7 @@ def isUnslashed (validator : Validator) : Bool := validator.slashed = 0
 
 /-- The reference conjunction selecting a target contribution. -/
 def contributesTarget (validator : Validator) (flags : Word) (epoch : Word) : Bool :=
-  isActiveValidator validator epoch && hasTargetFlag flags && isUnslashed validator
+  (isActiveValidator validator epoch && isUnslashed validator) && hasTargetFlag flags
 
 def contributesActive (validator : Validator) (epoch : Word) : Bool :=
   isActiveValidator validator epoch
@@ -275,7 +275,7 @@ theorem sumActive_prefix_le (validators : List Validator) (epoch : Word) (k : Na
   | nil => cases k <;> simp [sumActive]
   | cons validator tail ih =>
       cases k with
-      | zero => simp [sumActive, List.take_succ_cons]
+      | zero => simp [sumActive]
       | succ j =>
           have le := ih j
           simp only [List.take_succ_cons, sumActive]
@@ -287,7 +287,7 @@ theorem sumTargetPairs_prefix_le (entries : List (Validator × Word)) (epoch : W
   | nil => cases k <;> simp [sumTargetPairs]
   | cons entry tail ih =>
       cases k with
-      | zero => simp [sumTargetPairs, List.take_succ_cons]
+      | zero => simp [sumTargetPairs]
       | succ j =>
           have le := ih j
           simp only [List.take_succ_cons, sumTargetPairs]
@@ -321,7 +321,7 @@ def aggregateResult (input : Input) : Word × Word × Word :=
 
 theorem incrementWord_value : ((BitVec.ofNat 20 0x3B9AD).zeroExtend 32 <<< 12).signExtend 64 +
     signExtend12 0xA00 = incrementWord := by
-  simp only [signExtend12, incrementWord, effectiveBalanceIncrement, Nat.reduceMul]
+  simp only [signExtend12, incrementWord, effectiveBalanceIncrement]
   bv_decide
 
 end ClAsm.Aggregate

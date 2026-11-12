@@ -16,6 +16,8 @@ def emitInstr : Instr → Except String String
   | .ANDI dst src imm => .ok s!"andi x{dst.toNat}, x{src.toNat}, {imm.toInt}"
   | .XORI dst src imm => .ok s!"xori x{dst.toNat}, x{src.toNat}, {imm.toInt}"
   | .ORI dst src imm => .ok s!"ori x{dst.toNat}, x{src.toNat}, {imm.toInt}"
+  | .LUI dst imm => .ok s!"lui x{dst.toNat}, {imm.toNat}"
+  | .SUB dst src1 src2 => .ok s!"sub x{dst.toNat}, x{src1.toNat}, x{src2.toNat}"
   | .ADD dst src1 src2 => .ok s!"add x{dst.toNat}, x{src1.toNat}, x{src2.toNat}"
   | .SLTU dst src1 src2 => .ok s!"sltu x{dst.toNat}, x{src1.toNat}, x{src2.toNat}"
   | .XOR dst src1 src2 => .ok s!"xor x{dst.toNat}, x{src1.toNat}, x{src2.toNat}"
