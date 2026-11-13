@@ -81,6 +81,13 @@ def isaProfile : LeanAsm.Rv64.IsaProfile :=
     .BEQ, .BNE, .BLT, .BGE, .BLTU, .BGEU, .JAL, .JALR,
     .MUL, .MULH, .MULHSU, .MULHU, .DIV, .DIVU, .REM, .REMU, .FENCE]⟩
 
+theorem instr_supported {source : Instr} {target : LeanAsm.Rv64.Instr}
+    (h : instr source = .ok target) : isaProfile.Supports target := by
+  cases source <;> simp [instr] at h
+  all_goals cases h
+  all_goals simp [isaProfile, LeanAsm.Rv64.IsaProfile.Supports,
+    LeanAsm.Rv64.Instr.opcode]
+
 def program (source : Program) : Except String LeanAsm.Rv64.Program :=
   source.mapM instr
 
