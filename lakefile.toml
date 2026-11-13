@@ -3,6 +3,12 @@ version = "0.1.0"
 defaultTargets = ["ClAsm", "cl-asm", "cl-asm-test", "cl-asm-weigh", "cl-asm-aggregate"]
 
 [[require]]
+name = "LeanAsm"
+git = "https://github.com/NyxFoundation/LeanAsm"
+rev = "c04af0c5510d9074dae52a0874369f646c40c98a"
+
+# Retained temporarily while its generic proof logic is moved into LeanAsm.
+[[require]]
 name = "riscv-zkvm"
 git = "https://github.com/Verified-zkEVM/riscv-zkvm"
 rev = "afcbc45e1c74c2d296e032b5606dd977a304e8ad"
