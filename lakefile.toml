@@ -7,7 +7,8 @@ name = "LeanAsm"
 git = "https://github.com/NyxFoundation/LeanAsm"
 rev = "c04af0c5510d9074dae52a0874369f646c40c98a"
 
-# Retained temporarily while its generic proof logic is moved into LeanAsm.
+# cl-asm retains this dependency for its existing proof environment and
+# optional zkVM integration. LeanAsm does not absorb zkVM-specific semantics.
 [[require]]
 name = "riscv-zkvm"
 git = "https://github.com/Verified-zkEVM/riscv-zkvm"

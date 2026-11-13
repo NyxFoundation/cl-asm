@@ -12,8 +12,9 @@ steps. Its generated ELF is checked against the pinned official reference;
 its ZisK integration is not yet included.
 
 Portable instruction emission is being moved to
-[LeanAsm](https://github.com/NyxFoundation/LeanAsm). The existing proof logic
-remains temporarily pinned to `riscv-zkvm` until its reusable parts are ported.
+[LeanAsm](https://github.com/NyxFoundation/LeanAsm). The `riscv-zkvm`
+dependency remains in cl-asm for its existing proof environment and optional
+zkVM integration; zkVM-specific semantics are not part of LeanAsm.
 
 - [DESIGN.md](DESIGN.md): scope, ABI, memory layout, trust boundaries.
 - [Roadmap](docs/roadmap.md): why the consensus layer is being proved, zkVM
