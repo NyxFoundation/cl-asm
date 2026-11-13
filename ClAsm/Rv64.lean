@@ -1,4 +1,4 @@
-import LeanAsm.Rv64.Basic
+import LeanAsm.Frontend
 import RiscvZkvm.Rv64.Program
 
 /-! Temporary syntax adapter while cl-asm proofs are ported to LeanAsm. -/
@@ -71,6 +71,26 @@ def instr : Instr → Except String LeanAsm.Rv64.Instr
   | .REM d a b => .ok (.REM (reg d) (reg a) (reg b))
   | .REMU d a b => .ok (.REMU (reg d) (reg a) (reg b))
   | _ => .error "instruction has no portable LeanAsm representation"
+
+/-- Opcodes accepted by the portable cl-asm code-generation boundary. -/
+def isaProfile : LeanAsm.Rv64.IsaProfile :=
+  ⟨[.ADD, .SUB, .SLL, .SRL, .SRA, .AND, .OR, .XOR, .SLT, .SLTU,
+    .ADDI, .ANDI, .ORI, .XORI, .SLTI, .SLTIU, .SLLI, .SRLI, .SRAI,
+    .ADDIW, .LUI, .AUIPC,
+    .LB, .LH, .LW, .LD, .LBU, .LHU, .LWU, .SB, .SH, .SW, .SD,
+    .BEQ, .BNE, .BLT, .BGE, .BLTU, .BGEU, .JAL, .JALR,
+    .MUL, .MULH, .MULHSU, .MULHU, .DIV, .DIVU, .REM, .REMU, .FENCE]⟩
+
+def program (source : Program) : Except String LeanAsm.Rv64.Program :=
+  source.mapM instr
+
+instance : LeanAsm.LowerRv64 Program where
+  lower := program
+
+instance : LeanAsm.EmitAsm Program where
+  emit name source := do
+    let target ← program source
+    return LeanAsm.Rv64.emitProgram name target
 
 end Upstream
 end ClAsm.Rv64

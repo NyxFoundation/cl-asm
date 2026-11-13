@@ -13,12 +13,7 @@ def emitInstr (instruction : Instr) : Except String String := do
 def symbolName (name : String) : String :=
   name.replace "-" "_"
 
-def assembly (name : String) (program : Program) : Except String String := do
-  let symbol := symbolName name
-  let lines ← program.mapM emitInstr
-  return ".option norvc\n.option norelax\n.section .text\n.balign 4\n" ++
-    s!".globl {symbol}\n.type {symbol}, @function\n{symbol}:\n" ++
-    String.join (lines.map (fun line => s!"  {line}\n")) ++
-    s!".size {symbol}, . - {symbol}\n"
+def assembly (name : String) (program : Program) : Except String String :=
+  LeanAsm.emitAsm (symbolName name) program
 
 end ClAsm.Codegen
