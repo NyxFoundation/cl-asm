@@ -3,6 +3,13 @@ version = "0.1.0"
 defaultTargets = ["ClAsm", "cl-asm", "cl-asm-test", "cl-asm-weigh", "cl-asm-aggregate"]
 
 [[require]]
+name = "LeanAsm"
+git = "https://github.com/NyxFoundation/LeanAsm"
+rev = "76bf12c339bf6dce140c817d334d2a4d0f0f48d7"
+
+# cl-asm retains this dependency for its existing proof environment and
+# optional zkVM integration. LeanAsm does not absorb zkVM-specific semantics.
+[[require]]
 name = "riscv-zkvm"
 git = "https://github.com/Verified-zkEVM/riscv-zkvm"
 rev = "afcbc45e1c74c2d296e032b5606dd977a304e8ad"

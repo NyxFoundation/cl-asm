@@ -11,6 +11,14 @@ The standalone `aggregate` routine computes the caller's three balances in
 steps. Its generated ELF is checked against the pinned official reference;
 its ZisK integration is not yet included.
 
+Portable instruction emission is being moved to
+[LeanAsm](https://github.com/NyxFoundation/LeanAsm). The `riscv-zkvm`
+dependency remains in cl-asm for its existing proof environment and optional
+zkVM integration; zkVM-specific semantics are not part of LeanAsm. Portable
+programs implement LeanAsm's common `LowerRv64` and `EmitAsm` capabilities via
+a partial adapter; unsupported zkVM and pseudo instructions remain explicit
+lowering errors.
+
 - [DESIGN.md](DESIGN.md): scope, ABI, memory layout, trust boundaries.
 - [Roadmap](docs/roadmap.md): why the consensus layer is being proved, zkVM
   findings, PoC decisions, and remaining work.
